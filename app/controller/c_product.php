@@ -13,23 +13,30 @@
         }
 
         function DetailProduct(){
-           
-            
-            $detail_product = $this->htmlProductModel->product_detailbyid($_GET['MaSP']);
-            if(is_array($detail_product)){
-                $this->titlepage = $detail_product['TenSP'];
-                $detailrelate = $this->htmlProductModel->product_lienquanRanDom($detail_product['MaDM']);
-                $loadcomment = $this->htmlProductModel->get_byproductcomment($_GET['MaSP']);
-                $bannerItem = $this->htmlPageModel->load_banner_Item(); // Show banner ở trang khác
-                //Lưu vào mảng data
-                $this->data['banner_header_item'] = $bannerItem;// Show banner ở trang khác
-                $this->data['detail_product_byID'] = $detail_product;
-                $this->data['productRelate'] = $detailrelate;
-                $this->data['product_comment'] = $loadcomment;
-                //View ra trang
-                $this->renderView("v_product_detail", $this->titlepage, $this->data);
+            //preg_matchđược sử dụng để trích xuất phần số sau /product/detail/từ $_SERVER['REQUEST_URI']
+            preg_match('/\/product\/detail\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+            if (isset($matches[1])) {
+                $MaSP = $matches[1];
+                
+                $detail_product = $this->htmlProductModel->product_detailbyid($MaSP);
+                if(is_array($detail_product)){
+                    //print_r($matches);
+                    $this->titlepage = $detail_product['TenSP'];
+                    $detailrelate = $this->htmlProductModel->product_lienquanRanDom($detail_product['MaDM']);
+                    $loadcomment = $this->htmlProductModel->get_byproductcomment($MaSP);
+                    $bannerItem = $this->htmlPageModel->load_banner_Item(); // Show banner ở trang khác
+                    //Lưu vào mảng data
+                    $this->data['banner_header_item'] = $bannerItem;// Show banner ở trang khác
+                    $this->data['detail_product_byID'] = $detail_product;
+                    $this->data['productRelate'] = $detailrelate;
+                    $this->data['product_comment'] = $loadcomment;
+                    //View ra trang
+                    $this->renderView("v_product_detail", $this->titlepage, $this->data);
+                }else{
+                    header("location:".APPURL);
+                }
             }else{
-                header("location:index.php?route=home");
+                echo 'kk';
             }
         }
 

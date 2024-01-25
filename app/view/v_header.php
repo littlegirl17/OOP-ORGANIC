@@ -16,15 +16,15 @@
     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="public/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="public/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="public/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="public/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="public/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="public/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="public/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="<?=APPURL?>public/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -36,7 +36,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="index.php?mod=page&act=home"><img src="public/img/logo.png" alt=""></a>
+            <a href="<?=APPURL?>"><img src="<?=APPURL?>public/img/logo.png" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -45,7 +45,7 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="index.php?mod=page&act=home">Home</a></li>
+                <li class="active"><a href="<?=APPURL?>">Home</a></li>
                 
                 <li><a href="#">Danh mục</a>
                     <ul class="header__menu__dropdown">
@@ -104,18 +104,18 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="index.php?mod=page&act=home"><img src="public/img/logo.png" alt=""></a>
+                        <a href="<?=APPURL?>"><img src="<?=APPURL?>public/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="index.php?mod=page&act=home">Home</a></li>
+                            <li class="active"><a href="<?=APPURL?>">Home</a></li>
                             
                             <li><a href="#">Danh mục</a>
                                 <ul class="header__menu__dropdown">
                                 <?php if (!empty($data['getall_danhmuc_header'])) { $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm): ?>
-                                    <li><a href="index.php?route=category&MaDM=<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
+                                    <li><a href="<?=APPURL?>catagory/product/<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
                                     <?php endforeach;} ?>
                                 </ul>
                             </li>
@@ -151,8 +151,8 @@
                                             <i class="fa fa-user"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="index.php?route=login">Đăng nhập</a></li>
-                                            <li><a class="dropdown-item" href="index.php?route=register">Đăng ký</a></li>
+                                            <li><a class="dropdown-item" href="<?=APPURL?>user/login">Đăng nhập</a></li>
+                                            <li><a class="dropdown-item" href="<?=APPURL?>user/register">Đăng ký</a></li>
                                         </ul>
                                     </div>
                                 <?php endif; ?>
@@ -169,7 +169,7 @@
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
-        <?php if (!isset($_GET['route'])): ?>
+        <?php if (!isset($_GET['url'])): ?>
         <section class="hero">
             <div class="container">
                 <div class="row">
@@ -181,7 +181,7 @@
                             </div>
                             <ul>
                                 <?php $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm):?>
-                                    <li><a href="index.php?route=category&MaDM=<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
+                                    <li><a href="<?=APPURL?>catagory/product/<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
@@ -213,7 +213,7 @@
                                     if($item['ViTri'] == 1):
                                 ?>
                                     <div class="carousel-item <?=$activeKey?>">
-                                    <img src="public/img/hero/<?=$item['HinhAnh']?>" class="d-block w-100" alt="...">
+                                    <img src="<?=APPURL?>public/img/hero/<?=$item['HinhAnh']?>" class="d-block w-100" alt="...">
                                     </div>
                             <?php endif; endforeach; ?>
                             </div>
@@ -231,7 +231,7 @@
                 </div>
             </div>
         </section>
-        <?php elseif (isset($_GET['route']) && $_GET['route'] == 'home'):?>
+        <?php elseif (isset($_GET['url']) && $_GET['url'] == 'index'):?>
             <section class="hero">
                 <div class="container">
                     <div class="row">
@@ -243,7 +243,7 @@
                                 </div>
                                 <ul>
                                     <?php $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm):?>
-                                        <li><a href="index.php?route=category&MaDM=<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
+                                        <li><a href="<?=APPURL?>catagory/product/<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>
@@ -275,7 +275,7 @@
                                     
                                 ?>
                                     <div class="carousel-item <?=$activeKey?>">
-                                    <img src="public/img/hero/<?=$item['HinhAnh']?>" class="d-block w-100" alt="...">
+                                    <img src="<?=APPURL?>public/img/hero/<?=$item['HinhAnh']?>" class="d-block w-100" alt="...">
                                     </div>
                                 <?php endforeach; ?>
                                 </div>
@@ -293,129 +293,9 @@
                     </div>
                 </div>
             </section>
-        <?php elseif (isset($_GET['route']) && $_GET['route'] == 'category'):?>
-            <!-- Hero Section Begin -->
-                <section class="hero hero-normal">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="hero__categories">
-                                <div class="hero__categories__all">
-                                    <i class="fa fa-bars"></i>
-                                    <span>All danh mục</span>
-                                </div>
-                                <ul>
-                                <?php $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm):?>
-                                        <li><a href="index.php?route=category&MaDM=<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-9">
-                            <div class="hero__search">
-                                <div class="hero__search__form">
-                                    <form action="#">
-                                        <div class="hero__search__categories">
-                                            All danh mục
-                                            <span class="arrow_carrot-down"></span>
-                                        </div>
-                                        <input type="text" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                        <button type="submit" class="site-btn">SEARCH</button>
-                                    </form>
-                                </div>
-                                <div class="hero__search__phone">
-                                    <div class="hero__search__phone__icon">
-                                        <i class="fa fa-phone"></i>
-                                    </div>
-                                    <div class="hero__search__phone__text">
-                                            <h5>+035 312 3771</h5>
-                                            <span>Hỗ trợ khách hàng</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </section>
-            <!-- Hero Section End -->
-            <!-- Breadcrumb Section Begin -->
-            <section class="breadcrumb-section set-bg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-center">
-                            <div class="breadcrumb__text">
-                                <h2>Danh mục sản phẩm</h2>
-                                <div class="breadcrumb__option">
-                                    <a href="index.php?mod=page&act=home">Home</a>
-                                    <span>Danh mục</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php 
-                    $bannerItem = $data['banner_header_item']; foreach($bannerItem as $key => $item): 
-                    
-                    if($item['ViTriItem'] > 0):
-                ?>
-                    <img src="public/img/<?=$item['HinhAnh']?>" alt="">
-                <?php endif; endforeach; ?>
-            </section>
-            <!-- Breadcrumb Section End -->
-        <?php elseif (isset($_GET['route']) && $_GET['route'] == 'detail'):?>
-            <!-- Hero Section Begin -->
-                <section class="hero hero-normal">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="hero__categories">
-                                    <div class="hero__categories__all">
-                                        <i class="fa fa-bars"></i>
-                                        <span>All danh mục</span>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#">Fresh Meat</a></li>
-                                        <li><a href="#">Vegetables</a></li>
-                                        <li><a href="#">Fruit & Nut Gifts</a></li>
-                                        <li><a href="#">Fresh Berries</a></li>
-                                        <li><a href="#">Ocean Foods</a></li>
-                                        <li><a href="#">Butter & Eggs</a></li>
-                                        <li><a href="#">Fastfood</a></li>
-                                        <li><a href="#">Fresh Onion</a></li>
-                                        <li><a href="#">Papayaya & Crisps</a></li>
-                                        <li><a href="#">Oatmeal</a></li>
-                                        <li><a href="#">Fresh Bananas</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-9">
-                                <div class="hero__search">
-                                    <div class="hero__search__form">
-                                        <form action="#">
-                                            <div class="hero__search__categories">
-                                                All danh mục
-                                                <span class="arrow_carrot-down"></span>
-                                            </div>
-                                            <input type="text" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                            <button type="submit" class="site-btn">SEARCH</button>
-                                        </form>
-                                    </div>
-                                    <div class="hero__search__phone">
-                                        <div class="hero__search__phone__icon">
-                                            <i class="fa fa-phone"></i>
-                                        </div>
-                                        <div class="hero__search__phone__text">
-                                                <h5>+035 312 3771</h5>
-                                                <span>Hỗ trợ khách hàng</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            <!-- Hero Section End -->
-
+        <?php elseif (isset($_GET['url']) && $_GET['url'] == 'catagory/product/(\d+)'):?>
+            
+        <?php elseif (isset($_GET['url']) && $_GET['url'] == 'product/detail/(\d+)'):?>
             
         <?php endif;?>
         

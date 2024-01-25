@@ -1,7 +1,74 @@
 
 <?php include_once 'v_header.php' ?>
 
-    
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="hero__categories">
+                                <div class="hero__categories__all">
+                                    <i class="fa fa-bars"></i>
+                                    <span>All danh mục</span>
+                                </div>
+                                <ul>
+                                <?php $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm):?>
+                                        <li><a href="<?=APPURL?>catagory/product/<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="hero__search">
+                                <div class="hero__search__form">
+                                    <form action="#">
+                                        <div class="hero__search__categories">
+                                            All danh mục
+                                            <span class="arrow_carrot-down"></span>
+                                        </div>
+                                        <input type="text" placeholder="Tìm kiếm sản phẩm tại đây?">
+                                        <button type="submit" class="site-btn">SEARCH</button>
+                                    </form>
+                                </div>
+                                <div class="hero__search__phone">
+                                    <div class="hero__search__phone__icon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    <div class="hero__search__phone__text">
+                                            <h5>+035 312 3771</h5>
+                                            <span>Hỗ trợ khách hàng</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </section>
+            <!-- Hero Section End -->
+            <!-- Breadcrumb Section Begin -->
+            <section class="breadcrumb-section set-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <div class="breadcrumb__text">
+                                <h2>Danh mục sản phẩm</h2>
+                                <div class="breadcrumb__option">
+                                    <a href="<?=APPURL?>">Home</a>
+                                    <span>Danh mục</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php 
+                    $bannerItem = $data['banner_header_item']; foreach($bannerItem as $key => $item): 
+                    
+                    if($item['ViTriItem'] > 0):
+                ?>
+                    <img src="<?=APPURL?>public/img/<?=$item['HinhAnh']?>" alt="">
+                <?php endif; endforeach; ?>
+            </section>
+            <!-- Breadcrumb Section End -->
     <!-- Product Section Begin -->
     <section class="product spad">
         <div class="container">
@@ -15,7 +82,7 @@
                                 $getdanhmuc = $data['getall_danhmuc']; 
                                 foreach($getdanhmuc as $dm): 
                             ?>
-                                <li><a href="index.php?route=category&MaDM=<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
+                                <li><a href="<?=APPURL?>catagory/product/<?=$dm['MaDM']?>"><?=$dm['TenDM']?></a></li>
                             <?php endforeach; ?>
                             </ul>
                         </div>
@@ -24,7 +91,10 @@
                 </div>
                 <div class="col-lg-9 col-md-7">
                     <div class="row">
-                        <?php if(isset($_GET['MaDM']) && ($_GET['MaDM']>0)): ?>
+                        <?php 
+                                $MaDM = $data['MaDM'];
+                                if(isset($MaDM) && $MaDM == 1 ):  
+                        ?>
                             <?php 
                                 $danhmuc_getbyid = $data['danhmucbyId'];
                                 foreach($danhmuc_getbyid as $item){
@@ -45,11 +115,11 @@
                                     echo '
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="featured__item">
-                                                <div class="featured__item__pic set-bg" data-setbg="public/img/traicay/'.$item['HinhAnh'].'">
+                                                <div class="featured__item__pic set-bg" data-setbg="'.APPURL.'public/img/traicay/'.$item['HinhAnh'].'">
                                                     
                                                 </div>
                                                 <div class="featured__item__text">
-                                                    <h6><a href="index.php?mod=product&act=detail&MaSP='.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+                                                    <h6><a href="'.APPURL.'catagory/product/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
                                     ';
                                                 if(empty($StatusProduct)){
                                                     echo $price;
@@ -101,11 +171,11 @@
                                     echo '
                                         <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="featured__item">
-                                                <div class="featured__item__pic set-bg" data-setbg="public/img/traicay/'.$item['HinhAnh'].'">
+                                                <div class="featured__item__pic set-bg" data-setbg="'.APPURL.'public/img/traicay/'.$item['HinhAnh'].'">
                                                     
                                                 </div>
                                                 <div class="featured__item__text">
-                                                    <h6><a href="index.php?mod=product&act=detail&MaSP='.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+                                                    <h6><a href="'.APPURL.'catagory/product/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
                                     ';
                                                 if(empty($StatusProduct)){
                                                     echo $price;
@@ -143,51 +213,50 @@
             </div>
         </div>
     </section>
-    <?php
-        if(isset($_GET['MaDM']) && ($_GET['MaDM']>0)):
+    <?php 
+            $MaDM = $data['MaDM'];
+            if(isset($data['MaDM'])): 
+
     ?>
     <div class="admin__pagein">
         <ul class="pagination">
             <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-            <a class="page-link" href="index.php?route=category&MaDM=<?=$MaDM?>&page=<?=$page-1?>" aria-label="Previous">
+            <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page-1?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <?php $SoTrang = $data['PhanTrang']; for($i=1; $i < $SoTrang ; $i++): ?>
                 <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                <a class="page-link" href="index.php?route=category&MaDM=<?=$MaDM?>&page=<?=$i?>"><?=$i?></a>
+                <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$i?>"><?=$i?></a>
                 </li>
             <?php endfor; ?>
                 <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?route=category&MaDM=<?=$MaDM?>&page=<?=$page+1?>" aria-label="Next">
+                <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page+1?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
     </div>
     <?php else: ?>
-        <div class="admin__pagein">
         <ul class="pagination">
             <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-            <a class="page-link" href="index.php?route=category&page=<?=$page-1?>" aria-label="Previous">
+            <a class="page-link" href="<?=APPURL?>catagory/product/&page=<?=$page-1?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <?php $SoTrang = $data['PhanTrang']; for($i=1; $i < $SoTrang ; $i++): ?>
                 <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                <a class="page-link" href="index.php?route=category&page=<?=$i?>"><?=$i?></a>
+                <a class="page-link" href="<?=APPURL?>catagory/product/&page=<?=$i?>"><?=$i?></a>
                 </li>
             <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?route=category&page=<?=$page+1?>" aria-label="Next">
+                <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+                <a class="page-link" href="<?=APPURL?>catagory/product/&page=<?=$page+1?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
-    </div>
-    <?php
-        endif;
-    ?>
+    <?php endif; ?>
+
 
 <?php include_once 'v_footer.php' ?>
 

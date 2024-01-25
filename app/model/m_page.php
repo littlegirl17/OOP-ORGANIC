@@ -70,16 +70,16 @@
             echo '
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="public/img/traicay/'.$item['HinhAnh'].'">
+                        <div class="featured__item__pic set-bg" data-setbg="'.APPURL.'public/img/traicay/'.$item['HinhAnh'].'">
                             
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="index.php?route=detail&MaSP='.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+                            <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
             ';
                         if(empty($StatusProduct)){
                             echo $price;
                             echo ' 
-                                <form action="index.php?route=addtocart" method="post">
+                                <form action="'.APPURL.'addtocart" method="post">
                                     <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                                     <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                                     <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
