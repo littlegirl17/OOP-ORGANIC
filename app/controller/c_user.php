@@ -13,6 +13,9 @@
         function login(){
             $this->titlepage = "Trang đăng nhập";
             $kq = null;
+
+            //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.).
+            //Khi bạn muốn kiểm tra xem biểu mẫu đã được gửi bằng phương thức HTTP POST hay chưa
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $kq = $this->htmlUserModel->user_getLogin($_POST['Email'],$_POST['MatKhau']);
                 if($kq){
@@ -22,7 +25,7 @@
                         if($_SESSION['user']['Quyen'] >=1 ){
                             header("location: index.php?mod=admin&act=dashboard");
                         }elseif ($_SESSION['user']['Quyen'] ==0){
-                            header("location: index.php?route=home");
+                            header("location: ".APPURL);
                         }
                     }else{
                         header("location: index.php?mod=user&act=trangloi");
@@ -45,7 +48,7 @@
             if(isset($_SESSION['user'])){
                 unset($_SESSION['user']);
             }
-            header("location: index.php?route=home");
+            header("location: ".APPURL);
         }
 
         function register(){

@@ -4,12 +4,20 @@
     include_once 'app/config/database.php';
     include_once 'app/config/config.php';
     use App\routing\route; //use được sử dụng trong PHP để import (kế thừa) một namespace, một lớp, hoặc một hằng số từ một file hoặc một namespace khác.
+    // ROUTE HOME
     Route::add('/', 'c_home@index');
     Route::add('/index', 'c_home@index');
+    // ROUTE CATAGORY
     Route::add('/catagory/product', 'c_catagory@category');
     Route::add('/catagory/product/(\d+)', 'c_catagory@category');
+    // ROUTE PRODUCT
     Route::add('/product/detail/(\d+)', 'c_product@DetailProduct');
+    Route::add('/product/cart', 'c_product@Product_Cart');
+    Route::add('/cart/deleteId/(\d+)', 'c_product@Delete_CartId');
+    Route::add('/cart/soLuongId/(\d+)/(\w+)', 'c_product@update_soluong');
+    // ROUTE USER
     Route::add('/user/login', 'c_user@login');
+    Route::add('/user/logout', 'c_user@logout');
     Route::add('/user/register', 'c_user@register');
     
     $uri = isset($_GET['url']) ? "/".rtrim($_GET['url'], '/') : '/index';

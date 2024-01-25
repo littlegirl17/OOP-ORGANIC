@@ -79,14 +79,14 @@
                         if(empty($StatusProduct)){
                             echo $price;
                             echo ' 
-                                <form action="'.APPURL.'addtocart" method="post">
+                                <form action="'.APPURL.'product/cart" method="post">
                                     <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                                     <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                                     <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
                                     <input type="hidden" name="TenSP" value="'.$item['TenSP'].'">
                                     <input type="hidden" name="SoLuong" value="1">
                                     <div class="intro">
-                                        <input type="submit" value="Thêm vào giỏ " name="submitaddtocart">
+                                        <input type="submit" value="Thêm vào giỏ " >
                                     </div>
                                 </form> 
                             ';
@@ -140,12 +140,12 @@
                             '.$GiamGia.'
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="index.php?route=detail&MaSP='.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+                        <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
                 ';
                         if(empty($StatusProduct)){
                             echo $price . $GiaGiamSP;
                             echo ' 
-                                <form action="index.php?mod=product&act=addtocart" method="post">
+                                <form action="'.APPURL.'product/cart" method="post">
                                     <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                                     <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                                     <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
@@ -199,7 +199,7 @@
                         
     //                 </div>
     //                 <div class="featured__item__text">
-    //                     <h6><a href="index.php?mod=product&act=detail&MaSP='.$sp['MaSP'].'">'.$sp['TenSP'].'</a></h6>
+    //                     <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
     //                     '.$price.'
     //                     <div class="featured__item__text_MX">'.$MuaHang.'</div>
     //                 </div>
@@ -246,18 +246,18 @@
                             
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="index.php?route=detail&MaSP='.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+                        <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
                             '.$price.'
                             <div class="featured__item__text_MX">'.$SoView.'</div>
                         </div>
-                        <form action="index.php?mod=product&act=addtocart" method="post">
+                        <form action="'.APPURL.'product/cart" method="post">
                             <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                             <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                             <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
                             <input type="hidden" name="TenSP" value="'.$item['TenSP'].'">
                             <input type="hidden" name="SoLuong" value="1">
                             <div class="intro">
-                                <input type="submit" value="Thêm vào giỏ " name="submitaddtocart">
+                                <input type="submit" value="Thêm vào giỏ " >
                             </div>
                         </form> 
                     </div>

@@ -7,15 +7,5 @@
     if(!isset($_SESSION['mygiohang'])) {
         $_SESSION['mygiohang'] = array();
     }
-    
-    $controller_name = "";
-    $view_name = "";
-
-
-
-
-    
-
-    
 
 ?>

@@ -40,7 +40,7 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="index.php?route=addtocart"><i class="fa fa-shopping-bag"></i> </a></li>
+                <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> </a></li>
             </ul>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -131,7 +131,7 @@
                             <div class="header__cart">
                                 <ul>
                                     <li><a href="index.php?mod=product&act=yeuthich"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="index.php?route=addtocart"><i class="fa fa-shopping-bag"></i> </a></li>
+                                    <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> </a></li>
                                 </ul>
                             </div>
                             <div class="header__cart__login">
@@ -142,7 +142,7 @@
                                         </button>
                                         <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="index.php?mod=myaccount&act=myaccount">Tài khoản của tôi</a></li>
-                                            <li><a class="dropdown-item" href="index.php?route=logout">Đăng xuất</a></li>
+                                            <li><a class="dropdown-item" href="<?=APPURL?>user/logout">Đăng xuất</a></li>
                                         </ul>
                                     </div>
                                 <?php else: ?>

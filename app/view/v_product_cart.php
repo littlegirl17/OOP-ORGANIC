@@ -1,46 +1,6 @@
 <?php 
     include_once 'v_header.php';
-    /*
-        ?? -> toán tử hợp nhất null
-        -> Nó kiểm tra nếu giá trị bên trái của nó là null (hoặc không tồn tại), thì nó sẽ trả về giá trị bên PHẢI của nó
-        -> Nếu giá trị bên trái không phải là null, thì giá trị bên trái sẽ được trả về.
     
-        [] đây là array trống: nếu $_SESSION['mygiohang'] là null thì $cart sẽ được thiết lập bằng 1 mảng mới
-    */
-
-    /*
-        == So sánh giá trị của hai biến mà không xem xét kiểu dữ liệu
-        === So sánh giá trị và kiểu dữ liệu của hai biến
-    */
-
-    //Khởi tạo giỏ hàng
-        $cart = $_SESSION['mygiohang'] ?? [];
-        $TongTien = 0;
-        $SoLuong = 0;
-
-    //Lấy thông tin từ URL 
-        if(isset($_GET['id'])){
-            $id = $_GET['id'];
-            $type = $_GET['type'];
-
-            if(isset($cart[$id])){
-
-                if($type === 'incre'){
-                    $cart[$id]['SoLuong']++;// [id] Đây là chỉ số của mảng
-                
-                }elseif ($type === 'decre') {
-                    $cart[$id]['SoLuong']--;
-
-                    if($cart[$id]['SoLuong'] < 1){
-                        unset($cart[$id]); //Loại bỏ sản phẩm trong mảng $cart có khóa là $id // ngụ ý rằng họ không muốn mua nó nữa và muốn loại bỏ nó khỏi giỏ hàng.
-                    }
-
-                }
-            }
-    //Cập nhật giỏ hàng trong session
-        //Lưu lại tăng hoặc giảm vào session mygiohang
-        $_SESSION['mygiohang'] = $cart;
-    }
 ?>
 
     <!-- Hero Section Begin -->
@@ -97,7 +57,7 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="view/img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="<?=APPURL?>public/img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -116,7 +76,7 @@
 
     <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
-        <?php if(!empty($cart)): ?>
+        <?php if(!empty($_SESSION['mygiohang'])): ?>
         <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -133,17 +93,17 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        if(isset($cart) && is_array($cart)):
+                                        if(isset($_SESSION['mygiohang']) && is_array($_SESSION['mygiohang'])):
                                             $id = 0;// dung de dinh vi minh se xoa no tai vi tri nao trong array
                                             $ThanhTien = 0;
-                                            foreach($cart as $item):
+                                            foreach($_SESSION['mygiohang'] as $item):
                                                 $ThanhTien = $item['SoLuong']*$item['GiaSP'];
-                                                $linkdel = "index.php?mod=product&act=deleteid&del=".$id;
+                                                $linkdel = APPURL."cart/deleteId/".$id;
                                     ?>
                                         <tr>
                                             <input type="hidden" name="MaSP">
                                             <td class="shoping__cart__item">
-                                                <img src="view/img/traicay/<?=$item['HinhAnh']?>" alt="">
+                                                <img src="<?=APPURL?>public/img/traicay/<?=$item['HinhAnh']?>" alt="">
                                                 <h5><?=$item['TenSP']?></h5>
                                             </td>
                                             <td class="shoping__cart__price" id="GiaSP" >
@@ -152,9 +112,9 @@
                                             <td class="shoping__cart__quantity">
                                                 <div class="quantity">
                                                     <div class="pro-qty">
-                                                        <span class="dec qtybtn"><a href="index.php?mod=product&act=update_quantity&id=<?= $id ?>&type=decre" >-</a></span>
+                                                        <span class="dec qtybtn"><a href="<?=APPURL?>cart/soLuongId/<?=$item['MaSP']?>/less" >-</a></span>
                                                         <input type="text" value="<?=$item['SoLuong']?>">
-                                                        <span class="inc qtybtn" ><a href="index.php?mod=product&act=update_quantity&id=<?= $id ?>&type=incre" >+</a></span>
+                                                        <span class="inc qtybtn" ><a href="<?=APPURL?>cart/soLuongId/<?=$item['MaSP']?>/more" >+</a></span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -190,9 +150,10 @@
                         <div class="shoping__checkout">
                             <h5>Tổng tiền giỏ hàng</h5>
                                 <?php
-                                    if(isset($cart) && is_array($cart)){
+                                    if(isset($_SESSION['mygiohang']) && is_array($_SESSION['mygiohang'])){
+                                        $TongTien =0;
                                     $ThanhTien = 0;
-                                        foreach($cart as $cart){
+                                        foreach($_SESSION['mygiohang'] as $cart){
                                             $ThanhTien = $cart['SoLuong']*$cart['GiaSP'];
                                             $TongTien += $ThanhTien;
 

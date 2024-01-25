@@ -93,7 +93,7 @@
                     <div class="row">
                         <?php 
                                 $MaDM = $data['MaDM'];
-                                if(isset($MaDM) && $MaDM == 1 ):  
+                                if(isset($MaDM[1])  ):  
                         ?>
                             <?php 
                                 $danhmuc_getbyid = $data['danhmucbyId'];
@@ -215,29 +215,30 @@
     </section>
     <?php 
             $MaDM = $data['MaDM'];
-            if(isset($data['MaDM'])): 
+            if(isset($MaDM[1])): 
 
     ?>
-    <div class="admin__pagein">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-            <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <?php $SoTrang = $data['PhanTrang']; for($i=1; $i < $SoTrang ; $i++): ?>
-                <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$i?>"><?=$i?></a>
+        <div class="admin__pagein">
+            <ul class="pagination">
+                <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
+                <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page-1?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 </li>
-            <?php endfor; ?>
-                <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+                <?php $SoTrang = $data['PhanTrang']; for($i=1; $i < $SoTrang ; $i++): ?>
+                    <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
+                    <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$i?>"><?=$i?></a>
+                    </li>
+                <?php endfor; ?>
+                    <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+                    <a class="page-link" href="<?=APPURL?>catagory/product/<?=$MaDM?>/&page=<?=$page+1?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     <?php else: ?>
+        <div class="admin__pagein">
         <ul class="pagination">
             <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
             <a class="page-link" href="<?=APPURL?>catagory/product/&page=<?=$page-1?>" aria-label="Previous">
@@ -255,6 +256,7 @@
                 </a>
             </li>
         </ul>
+        </div>
     <?php endif; ?>
 
 

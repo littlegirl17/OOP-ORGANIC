@@ -23,6 +23,9 @@
         function get_byproductcomment($MaSP){
             return $this->data->pdo_query("SELECT * FROM binhluan bl INNER JOIN taikhoan tk ON bl.MaTK = tk.MaTK WHERE bl.MaSP=?",$MaSP);
         }
+
+
+        // 
     }
 
 

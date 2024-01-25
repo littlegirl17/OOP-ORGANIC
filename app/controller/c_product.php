@@ -43,8 +43,9 @@
         function Product_Cart(){
             $this->titlepage = "Trang giỏ hàng";
 
-            //
-            if(isset($_POST['submitaddtocart']) && ($_POST['submitaddtocart']!="")){
+            //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.).
+            //Khi bạn muốn kiểm tra xem biểu mẫu đã được gửi bằng phương thức HTTP POST hay chưa
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $MaSP = $_POST['MaSP'];
                 $HinhAnh = $_POST['HinhAnh'];
                 $GiaSP = $_POST['GiaSP'];
@@ -78,14 +79,48 @@
                     ];
                     $_SESSION['mygiohang'][] = $cart;
                 }
-                header("location: index.php?route=home");
+                header("location: ".APPURL);
             }
 
             //View ra trang
             $this->renderView("v_product_cart", $this->titlepage, $this->data);
         }
 
-        
+        function Delete_CartId(){
+            preg_match('/\/cart\/deleteId\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+            
+            if(isset($matches[1])){
+                $id = $matches[1];
+                array_splice($_SESSION['mygiohang'],$id,1); //xoa cai mang nao - Cai dinh vi thu may - xoa bao nhieu phan tu
+            }else{
+                $_SESSION['mygiohang'] = [];
+            }
+            header("location:".APPURL."product/cart");
+        }
+
+        public function update_soluong(){
+            preg_match('/\/cart\/soLuongId\/(\d+)\/(\w+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+            
+            if(isset($matches)){
+                $MaSP = $matches[1];
+                $action = $matches[2];
+
+                $cart = isset($_SESSION['mygiohang']) ? $_SESSION['mygiohang'] : [];
+
+                $key = array_search($MaSP, array_column($cart, 'MaSP'));
+                
+                //Nếu sản phẩm được tìm thấy
+                if($key !== false){
+                    if($action == 'more'){
+                        $cart[$key]['SoLuong']++;
+                    }elseif ($action == 'less' && $cart[$key]['SoLuong'] > 1) {
+                        $cart[$key]['SoLuong']--;
+                    }
+                    $_SESSION['mygiohang'] = $cart;
+                }
+            }
+            header("location: ".APPURL."product/cart");
+        }
     }
 
 
