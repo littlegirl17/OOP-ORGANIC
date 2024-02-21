@@ -137,6 +137,11 @@ nav ul li:hover {
     text-decoration: none;
 } 
 
+.tableadmin{
+    margin: left;
+    width: 700px;
+}
+
 .widget-chart {
     text-align: center;
     padding: 1rem;

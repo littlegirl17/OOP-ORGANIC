@@ -1,3 +1,4 @@
+<?php include_once 'v_admin_header.php'; $getcataId = $data['getcataId']; ?>
 <form action="" method="post" enctype="multipart/form-data">
     <div class="main-content">
         <h3 class="title-page">
@@ -8,7 +9,7 @@
         </div>
         <section class="row">
             <div class="col-sm-12 col-md-12 col xl-12">
-                <div class="card chart">
+                <div class="card chart tableadmin">
                     <form class="addPro" action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name">Tên danh mục:</label>
@@ -26,7 +27,7 @@
                             <label for="exampleInputFile" class="label_admin">Ảnh danh mục
                             <div class="custom-file">
                                 <input type="file" name="HinhAnh" >
-                                <img  src="view/img/categories/<?=$getcataId['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;">
+                                <img  src="<?=APPURL?>public/img/categories/<?=$getcataId['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;">
                             </div></label>
                         </div>
                         <div class="form-group">
@@ -43,3 +44,4 @@
         </section>
     </div> 
 </form>
+<?php include_once 'v_admin_footer.php' ?>

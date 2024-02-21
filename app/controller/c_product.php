@@ -2,14 +2,17 @@
         namespace App\controller;
         use App\model\m_product;
         use App\model\m_page;
+        use App\model\m_order;
 
     class c_product extends c_base{
         private $htmlProductModel;
         private $htmlPageModel;
+        private $htmlOrderModel;
 
         function __construct(){
             $this->htmlProductModel = new m_product;
             $this->htmlPageModel = new m_page;
+            $this->htmlOrderModel = new m_order;
         }
 
         function DetailProduct(){
@@ -17,7 +20,6 @@
             preg_match('/\/product\/detail\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
             if (isset($matches[1])) {
                 $MaSP = $matches[1];
-                
                 $detail_product = $this->htmlProductModel->product_detailbyid($MaSP);
                 if(is_array($detail_product)){
                     //print_r($matches);
@@ -41,9 +43,16 @@
         }
 
         function Product_Cart(){
+
+            if(!isset($_SESSION['user'])){
+                $_SESSION['canhbao'] = "Bạn cần đăng nhập trước khi mua hàng";
+                header("location: ".APPURL."user/login");
+                return; // Nếu không có return, các lệnh phía sau header vẫn có thể được thực hiện
+            }
+
             $this->titlepage = "Trang giỏ hàng";
 
-            //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.).
+            //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.). //$_SERVER['REQUEST_METHOD']là một biến superglobal chứa phương thức yêu cầu được sử dụng để truy cập trang
             //Khi bạn muốn kiểm tra xem biểu mẫu đã được gửi bằng phương thức HTTP POST hay chưa
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $MaSP = $_POST['MaSP'];
@@ -120,6 +129,285 @@
                 }
             }
             header("location: ".APPURL."product/cart");
+        }
+
+        public function checkout(){
+            $this->titlepage = "Trang thanh toán";
+
+                // LẤY DỮ LIỆU TỪ FORM
+                    // đoạn mã này là xác định liệu người dùng đã đăng nhập hay chưa
+                    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    if(isset($_SESSION['user'])){
+                        $MaTK = $_SESSION['user']['MaTK']; //nếu họ đã đăng nhập
+                    }else{
+                        $MaTK = 0; //nếu họ chưa đăng nhập
+                    }
+                    
+                    $TongTien = $_POST['TongTien'];
+                    $HoTen = $_POST['HoTen'];
+                    $DiaChi = $_POST['DiaChi'];
+                    $SoDienThoai = $_POST['SoDienThoai'];
+                    $Email = $_POST['Email'];
+                    if(isset($_POST['GhiChu'])){
+                        $GhiChu = $_POST['GhiChu']; //dữ liệu được gửi đi -> True
+                    }else{
+                        $GhiChu = ""; //nếu không có dữ liệu được gửi đi ->False -> rỗng
+                    }
+                    if(isset($_POST['PhuongThucTT'])){
+                        $PhuongThucTT = $_POST['PhuongThucTT']; //dữ liệu được gửi đi -> True
+                    }else{
+                        $PhuongThucTT = 0; //nếu không có dữ liệu được gửi đi ->False -> rỗng
+                    }
+                    $MaDHRandom = "Organic".rand(0,999999);
+                // Tạo đơn hàng và trả về một id đơn hàng
+                    $iddh = $this->htmlOrderModel->TaoDonHang($MaTK,$TongTien,$HoTen,$DiaChi,$SoDienThoai,$Email,$GhiChu,$PhuongThucTT,$MaDHRandom);
+                // LƯU LẠI BẰNG SESSION
+                    $_SESSION['iddh'] = $iddh;
+
+                    if(isset($_SESSION['mygiohang']) && is_array($_SESSION['mygiohang'])){
+                        foreach($_SESSION['mygiohang'] as $item){
+                            
+                            $this->htmlOrderModel->order_soluong($iddh,$item['MaSP']);
+                            //Thêm nó vào chi tiêt đơn hàng 
+                            $this->htmlOrderModel->addOrder($iddh,$item['MaSP'],$item['GiaSP'],$item['SoLuong']); //$iddh là để nó biết lấy theo cái mã iddh nào
+                        }
+                        //nghĩa là sau khi sản phẩm đó được đặt, và quay lại trang chủ thì sản phẩm đó phải biến mất trong giỏ hàng
+                    }
+                
+                    
+                    if($PhuongThucTT == 1 ){
+                        //Gửi Email
+                            // $TieuDe = "Đơn hàng bạn đặt đã thành công";
+                            // $NoiDung = "<div><p>Cảm ơn quý khách đã đặt hàng của chúng tôi mã đơn hàng của bạn là: ".$MaDHRandom."</p><div>";
+                            // $NoiDung .= "Thông tin đơn đặt hàng bao gồm:";
+                            // $TongTien=0; $ThanhTien=0;
+                            // foreach($_SESSION['mygiohang'] as $emailcart){
+                            //     $ThanhTien = $emailcart['SoLuong'] * $emailcart['GiaSP'];
+                            //     $TongTien +=$ThanhTien;
+                            //     $NoiDung .= '
+                            //             <ul>
+                            //                 <li style="list-style: none;"><strong style="color: #7FAD39;">Mã SP:</strong> '.$emailcart['MaSP'].'</li>
+                            //                 <li style="list-style: none;"><strong style="color: #7FAD39;">Tên SP:</strong> '.$emailcart['TenSP'].'</li>
+                            //                 <li style="list-style: none;"><strong style="color: #7FAD39;">Số Lượng:</strong> '.$emailcart['SoLuong'].'</li>
+                            //                 <li style="list-style: none;"><strong style="color: #7FAD39;">Giá SP:</strong> '.$emailcart['GiaSP'].'</li>
+                            //                 <li style="list-style: none;"><strong style="color: #7FAD39;">Thành Tiền:</strong> '.$ThanhTien.'</li>
+                            //             </ul>
+                            //         ';
+                            // }
+                            // $NoiDung .= '
+                            //             <hr>
+                            //             <ul>
+                            //                 <li style="list-style: none;"><strong style="color: red;">Tổng tiền:</strong> '.$TongTien.'</li>
+                            //             </ul>';
+                                        
+                            // $MailDatHang = $_SESSION['email'];
+                            // $mail = new Mailer();
+                            // $mail->DatHangEmail($TieuDe,$NoiDung,$MailDatHang);
+                            // //Chuyển đến trang đơn hàng (Hóa đơn)
+                            header("location:".APPURL."order/vieworder");
+                            unset($_SESSION['mygiohang']);
+                    } elseif ($PhuongThucTT == 2) {
+                        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+                        $vnp_Returnurl = APPURL."order/vieworder";
+                        $vnp_TmnCode = "9KKE7C2Q";//Mã website tại VNPAY 
+                        $vnp_HashSecret = "BWUHEEXHJGAUKSTBVRWFMQXIFHFEVPAC"; //Chuỗi bí mật
+
+                        $ThanhTien = 0;
+                        $TongTien = 0;
+                        foreach($_SESSION['mygiohang'] as $item){
+                            $ThanhTien = $item['SoLuong'] * $item['GiaSP'];
+                            $TongTien += $ThanhTien;
+                        }
+                        unset($_SESSION['mygiohang']);
+                        $vnp_TxnRef = rand(00,9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+                        $vnp_OrderInfo = 'Noi dung thanh toan';
+                        $vnp_OrderType = 'billpayment';
+                        $vnp_Amount = $TongTien * 100;
+                        $vnp_Locale = 'vn';
+                        $vnp_BankCode = 'NCB';
+                        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+                        //Add Params of 2.0.1 Version
+                        //$vnp_ExpireDate = $_POST['txtexpire'];
+                        //Billing
+                        // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
+                        // $vnp_Bill_Email = $_POST['txt_billing_email'];
+                        // $fullName = trim($_POST['txt_billing_fullname']);
+                        // if (isset($fullName) && trim($fullName) != '') {
+                        //     $name = explode(' ', $fullName);
+                        //     $vnp_Bill_FirstName = array_shift($name);
+                        //     $vnp_Bill_LastName = array_pop($name);
+                        // }
+                        // $vnp_Bill_Address=$_POST['txt_inv_addr1'];
+                        // $vnp_Bill_City=$_POST['txt_bill_city'];
+                        // $vnp_Bill_Country=$_POST['txt_bill_country'];
+                        // $vnp_Bill_State=$_POST['txt_bill_state'];
+                        // // Invoice
+                        // $vnp_Inv_Phone=$_POST['txt_inv_mobile'];
+                        // $vnp_Inv_Email=$_POST['txt_inv_email'];
+                        // $vnp_Inv_Customer=$_POST['txt_inv_customer'];
+                        // $vnp_Inv_Address=$_POST['txt_inv_addr1'];
+                        // $vnp_Inv_Company=$_POST['txt_inv_company'];
+                        // $vnp_Inv_Taxcode=$_POST['txt_inv_taxcode'];
+                        // $vnp_Inv_Type=$_POST['cbo_inv_type'];
+                        $inputData = array(
+                            "vnp_Version" => "2.1.0",
+                            "vnp_TmnCode" => $vnp_TmnCode,
+                            "vnp_Amount" => $vnp_Amount,
+                            "vnp_Command" => "pay",
+                            "vnp_CreateDate" => date('YmdHis'),
+                            "vnp_CurrCode" => "VND",
+                            "vnp_IpAddr" => $vnp_IpAddr,
+                            "vnp_Locale" => $vnp_Locale,
+                            "vnp_OrderInfo" => $vnp_OrderInfo,
+                            "vnp_OrderType" => $vnp_OrderType,
+                            "vnp_ReturnUrl" => $vnp_Returnurl,
+                            "vnp_TxnRef" => $vnp_TxnRef
+
+                            //"vnp_ExpireDate"=>$vnp_ExpireDate
+                            // "vnp_Bill_Mobile"=>$vnp_Bill_Mobile,
+                            // "vnp_Bill_Email"=>$vnp_Bill_Email,
+                            // "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
+                            // "vnp_Bill_LastName"=>$vnp_Bill_LastName,
+                            // "vnp_Bill_Address"=>$vnp_Bill_Address,
+                            // "vnp_Bill_City"=>$vnp_Bill_City,
+                            // "vnp_Bill_Country"=>$vnp_Bill_Country,
+                            // "vnp_Inv_Phone"=>$vnp_Inv_Phone,
+                            // "vnp_Inv_Email"=>$vnp_Inv_Email,
+                            // "vnp_Inv_Customer"=>$vnp_Inv_Customer,
+                            // "vnp_Inv_Address"=>$vnp_Inv_Address,
+                            // "vnp_Inv_Company"=>$vnp_Inv_Company,
+                            // "vnp_Inv_Taxcode"=>$vnp_Inv_Taxcode,
+                            // "vnp_Inv_Type"=>$vnp_Inv_Type
+                        );
+
+                        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                            $inputData['vnp_BankCode'] = $vnp_BankCode;
+                        }
+                        // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                        //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+                        // }
+
+                        //var_dump($inputData);
+                        ksort($inputData);
+                        $query = "";
+                        $i = 0;
+                        $hashdata = "";
+                        foreach ($inputData as $key => $value) {
+                            if ($i == 1) {
+                                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                            } else {
+                                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                                $i = 1;
+                            }
+                            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+                        }
+
+                        $vnp_Url = $vnp_Url . "?" . $query;
+                        if (isset($vnp_HashSecret)) {
+                            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+                            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+                        }
+                        $returnData = array('code' => '00'
+                            , 'message' => 'success'
+                            , 'data' => $vnp_Url);
+                            if (isset($_POST['redirect'])) {
+                                header('Location: ' . $vnp_Url);
+                                die();
+                            } else {
+                                echo json_encode($returnData);
+                            }
+                        
+                    } elseif ($PhuongThucTT == 3) {
+                        function execPostRequest($url, $data)
+                        {
+                            $ch = curl_init($url);
+                            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                    'Content-Type: application/json',
+                                    'Content-Length: ' . strlen($data))
+                            );
+                            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+                            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+                            //execute post
+                            $result = curl_exec($ch);
+                            //close connection
+                            curl_close($ch);
+                            return $result;
+                        }
+
+                        $ThanhTien = 0;
+                        $TongTien = 0;
+                        foreach($_SESSION['mygiohang'] as $item){
+                            $ThanhTien = $item['SoLuong'] * $item['GiaSP'];
+                            $TongTien += $ThanhTien;
+                        }
+                            $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+                            $partnerCode = 'MOMOBKUN20180529';
+                            $accessKey = 'klm05TvNBzhg7h7j';
+                            $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
+                            $orderInfo = "Thanh toán qua MoMo";
+                            $amount = $TongTien;
+                            $orderId = rand(00,9999);
+                            $redirectUrl = APPURL."order/vieworder";
+                            $ipnUrl = APPURL."order/vieworder";
+                            $extraData = "";
+                            
+                            
+                                $partnerCode = $partnerCode;
+                                $accessKey = $accessKey;
+                                $serectkey = $secretKey;
+                                $orderId = $orderId; // Mã đơn hàng
+                                $orderInfo = $orderInfo;
+                                $amount = $amount;
+                                $ipnUrl = $ipnUrl;
+                                $redirectUrl = $redirectUrl;
+                                $extraData = $extraData;
+                            
+                                $requestId = time() . "";
+                                $requestType = "payWithATM";
+                                //$extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
+                                //before sign HMAC SHA256 signature
+                                $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+                                $signature = hash_hmac("sha256", $rawHash, $serectkey);
+                                $data = array('partnerCode' => $partnerCode,
+                                    'partnerName' => "Test",
+                                    "storeId" => "MomoTestStore",
+                                    'requestId' => $requestId,
+                                    'amount' => $amount,
+                                    'orderId' => $orderId,
+                                    'orderInfo' => $orderInfo,
+                                    'redirectUrl' => $redirectUrl,
+                                    'ipnUrl' => $ipnUrl,
+                                    'lang' => 'vi',
+                                    'extraData' => $extraData,
+                                    'requestType' => $requestType,
+                                    'signature' => $signature);
+                                $result = execPostRequest($endpoint, json_encode($data));
+                                $jsonResult = json_decode($result, true);  // decode json
+                            
+                                //Just a example, please check more in there
+                            
+                                header('Location: ' . $jsonResult['payUrl']);
+                                unset($_SESSION['mygiohang']);
+                    }
+                        
+                    }
+
+
+            $this->renderView("v_product_checkout", $this->titlepage, $this->data);
+        }
+
+        public function vieworder(){
+            $this->titlepage = "Trang đơn hàng";
+            $MaDH = $_SESSION['iddh'];
+            $viewdonhang = $this->htmlOrderModel->get_order($MaDH);
+            $viewsanphamorder = $this->htmlOrderModel->get_productOrder($MaDH);
+            $this->data['viewdonhang'] = $viewdonhang;
+            $this->data['viewsanphamorder'] = $viewsanphamorder;
+            $this->renderView("v_product_order", $this->titlepage, $this->data);
         }
     }
 

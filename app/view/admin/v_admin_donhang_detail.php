@@ -1,8 +1,9 @@
+<?php include_once 'v_admin_header.php'; $detaildonhangadmin = $data['detaildonhangadmin']; ?>
 <div class="main-content">
     
     <div class="title-page">
         <h4>Chi tiết đơn hàng</h4><div class="back_myaccount" style="text-align: right;">
-        <a href="index.php?mod=admin&act=admin_donhang">Quay lại đơn hàng</a>
+        <a href="<?=APPURL?>admin/order">Quay lại đơn hàng</a>
     </div>
     </div>
     <section class="row">
@@ -28,7 +29,7 @@
                         ?>
                         <tr>
                             <th ><?=$stt?></th>
-                            <td><img src="view/img/traicay/<?=$item['HinhAnh']?>" alt="" style="width:100px;"><?=$item['TenSP']?></td>
+                            <td><img src="<?=APPURL?>public/img/traicay/<?=$item['HinhAnh']?>" alt="" style="width:100px;"><?=$item['TenSP']?></td>
                             <td><?=number_format($item['GiaSP'],"0",",",".")?>đ</td>
                             <td><?=$item['SoLuong']?> sản phẩm</td>
                             <td><?=number_format($TongTien,"0",",",".")?>đ</td>
@@ -43,3 +44,4 @@
         </div>
     </section>
 </div>
+<?php include_once 'v_admin_footer.php' ?>

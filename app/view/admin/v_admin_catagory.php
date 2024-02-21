@@ -1,3 +1,4 @@
+<?php include_once 'v_admin_header.php' ?>
 <div class="main-content">
     <h3 class="title-page">
         Danh mục
@@ -13,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
-                <a href="index.php?mod=admin&act=admin_add_catagory" class="btn btn-primary mb-2">Thêm danh mục mới</a>
+                <a href="<?=APPURL?>admin/catagoryAdd" class="btn btn-primary mb-2">Thêm danh mục mới</a>
             </div>
         </div>
     </div>
@@ -36,6 +37,7 @@
                     </thead>
                     <tbody>
                         <?php 
+                            $danhmucall = $data['danhmucall'];
                             $stt = 1; 
                             foreach($danhmucall as $item):
                         ?>
@@ -43,7 +45,7 @@
                             <td><?=$stt?></td>
                             <td><?=$item['MaDM']?></td>
                             <td><?=$item['TenDM']?></td>
-                            <td><img src="view/img/categories/<?=$item['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
+                            <td><img src="<?=APPURL?>public/img/categories/<?=$item['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
                             <td>
                                 <?php
                                     switch ($item['UuTien']) {
@@ -61,7 +63,7 @@
                             </td>
                             <td><?=$item['SoThuTu']?></td>
                             <td>
-                                <a href="index.php?mod=admin&act=admin_edit_catagory&MaDM=<?=$item['MaDM']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
+                                <a href="<?=APPURL?>admin/catagoryEdit/<?=$item['MaDM']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
                             </td>
                             <td>
                                 <?php
@@ -89,25 +91,31 @@
         </div>
     </section>
 
-    <div class="admin__pagein">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_catagory&page=<?=$page-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+    <?php
+
+?>
+
+<div class="admin__pagein">
+    <ul class="pagination">
+        <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
+            <a class="page-link" href="<?=APPURL?>admin/catagory?page=<?=($page-1)?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <?php 
+        $SoTrang = $data['SoTrang']; 
+        for($i=1; $i <= $SoTrang ; $i++): ?>
+            <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
+                <a class="page-link" href="<?=APPURL?>admin/catagory?page=<?=$i?>"><?=$i?></a>
             </li>
-            <?php for($i=1; $i < $SoTrang ; $i++): ?>
-                <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                    <a class="page-link" href="index.php?mod=admin&act=admin_catagory&page=<?=$i?>"><?=$i?></a>
-                </li>
-            <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_catagory&page=<?=$page+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+        <?php endfor;  ?>
+        <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+        <a class="page-link" href="<?= APPURL ?>admin/catagory?page=<?= ($page + 1) ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
 </div> 
 
 <script>
@@ -119,3 +127,4 @@
         event.preventDefault();
     }
 </script>
+<?php include_once 'v_admin_footer.php' ?>

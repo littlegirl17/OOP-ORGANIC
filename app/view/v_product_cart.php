@@ -165,7 +165,7 @@
                                         <li>Tổng tiền <span><?=number_format($TongTien ,"0",",",".")?> đ</span></li>
                                     </ul>
                         
-                            <a href="index.php?mod=product&act=checkout" class="primary-btn">TIẾN HÀNH KIỂM TRA</a>
+                            <a href="<?=APPURL?>product/checkout" class="primary-btn">TIẾN HÀNH KIỂM TRA</a>
                         </div>
                     </div>
                 </div>

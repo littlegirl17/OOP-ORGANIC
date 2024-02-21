@@ -42,6 +42,21 @@
             */
         }
 
+        function pdo_last_insert_id($sql) {
+            $sql_args = array_slice(func_get_args(), 1);
+            try{
+                $this->stmt = $this->conn->prepare($sql); // Chuẩn bị câu lệnh SQL
+                $this->stmt->execute($sql_args); // Thực thi câu lệnh SQL với các giá trị tham số
+                return $this->conn->lastInsertId(); // Trả về ID của bản ghi vừa được chèn
+            }
+            catch(PDOException $e){ // Xử lý lỗi nếu có
+                throw $e;
+            }
+            finally{ // Đảm bảo đóng kết nối sau khi thực hiện câu lệnh SQL
+                unset($conn);
+            }
+        }
+
         //Get all
         function pdo_query($sql){
             $sql_args = array_slice(func_get_args(), 1);

@@ -1,4 +1,7 @@
+<?php 
+    include_once 'v_header.php';
     
+?>
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -81,7 +84,7 @@
             </div>
             <div class="checkout__form">
                 <h4>Chi tiết thanh toán</h4>
-                <form action="index.php?mod=product&act=order" method="post">
+                <form action="" method="post">
                     
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
@@ -164,7 +167,7 @@
 
                                 <div class="checkout__order__subtotal">Thành tiền <span><?=number_format($TongTien,"0",",",".")?> đ</span></div>
                                 <div class="checkout__order__total">Tổng tiền <span><?=number_format($TongTien,"0",",",".")?> đ</span></div>
-                                <input type="submit" name="submit_checkout" class="site-btn" value="Đặt hàng" onclick="return submitPay();">                                 
+                                <input type="submit"  class="site-btn" value="Đặt hàng" onclick="return submitPay();">                                 
                                 <!-- <input type="submit" name="payUrl"  class="site-btn submitmomo" value="Thanh toán MoMo">  -->
 
                             </div>
@@ -188,3 +191,5 @@
 
         
     </script>
+
+<?php include_once 'v_footer.php'; ?>

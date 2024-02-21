@@ -1,3 +1,4 @@
+<?php include_once 'v_myaccount_header.php' ?>
 <section>
     <div class="">
         <h4>Tài khoản của bạn</h4>
@@ -5,7 +6,7 @@
     <div class="row myaccout mt-3">
         <div class="col-md-4">
             <div class="myaccount_image">
-                <img src="view/img/avatar/<?=$_SESSION['user']['HinhAnh']?>" alt="">
+                <img src="<?=APPURL?>public/img/avatar/<?=$_SESSION['user']['HinhAnh']?>" alt="">
             </div>
             
         </div>
@@ -45,3 +46,4 @@
         </div>
     </div>
 </section>
+<?php include_once 'v_myaccount_footer.php' ?>

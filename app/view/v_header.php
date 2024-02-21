@@ -49,7 +49,6 @@
                 
                 <li><a href="#">Danh mục</a>
                     <ul class="header__menu__dropdown">
-                       
                     </ul>
                 </li>
                 <li><a href="index.php?mod=page&act=bloghome">Bài viết</a></li>
@@ -141,7 +140,7 @@
                                         <?= isset($_SESSION['user']['UserName']) ? $_SESSION['user']['UserName'] : 'User' ?>
                                         </button>
                                         <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="index.php?mod=myaccount&act=myaccount">Tài khoản của tôi</a></li>
+                                        <li><a class="dropdown-item" href="<?=APPURL?>user/myaccount">Tài khoản của tôi</a></li>
                                             <li><a class="dropdown-item" href="<?=APPURL?>user/logout">Đăng xuất</a></li>
                                         </ul>
                                     </div>
@@ -189,10 +188,10 @@
                     <div class="col-lg-9">
                         <div class="hero__search">
                             <div class="hero__search__form">
-                                <form action="" method="post" >
-                                    <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                    <button type="submit" name="submit_home" id="searchBtn" class="site-btn">Tìm kiếm</button>
-                                </form>
+                                <form action="" method="GET" >
+                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?" value="<?php echo $_GET['keyword'] ?? '' ?>">
+                                        <button type="submit" class="site-btn" id="searchBtn">Tìm kiếm</button>
+                                    </form>
                             </div>
                             <div class="hero__search__phone">
                                 <div class="hero__search__phone__icon">
@@ -251,9 +250,9 @@
                         <div class="col-lg-9">
                             <div class="hero__search">
                                 <div class="hero__search__form">
-                                    <form action="" method="post" >
-                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                        <button type="submit" name="submit_home" id="searchBtn" class="site-btn">Tìm kiếm</button>
+                                    <form action="" method="GET" >
+                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?" value="<?php echo $_GET['keyword'] ?? '' ?>">
+                                        <button type="submit" id="searchBtn" class="site-btn">Tìm kiếm</button>
                                     </form>
                                 </div>
                                 <div class="hero__search__phone">

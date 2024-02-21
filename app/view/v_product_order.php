@@ -1,3 +1,4 @@
+<?php include_once 'v_header.php'; ?>
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
         <div class="container">
@@ -58,48 +59,49 @@
                 <div class="col-md-12">
                     
                     <?php 
-                        foreach($viewdonhang as $item):
+                        $viewdonhang = $data['viewdonhang'];
+                        foreach($viewdonhang as $order):
                     ?>
                     <div class="infor__order">
                         <div class="img__order">
-                            <img src="view/img/banner/order.png" alt="">
+                            <img src="<?=APPURL?>public/img/banner/order.png" alt="">
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Ngày đặt hàng:</strong></P> 
-                            <h6><?=$item['NgayDat']?></h6>
+                            <h6><?=$order['NgayDat']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Mã đơn hàng:</strong></P> 
-                            <h6><?=$item['MaDHRandom']?></h6>
+                            <h6><?=$order['MaDHRandom']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Họ tên:</strong></P> 
-                            <h6><?=$item['HoTen']?></h6>
+                            <h6><?=$order['HoTen']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Email:</strong></P> 
-                            <h6><?=$item['Email']?></h6>
+                            <h6><?=$order['Email']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Số điện thoại:</strong></P> 
-                            <h6><?=$item['SoDienThoai']?></h6>
+                            <h6><?=$order['SoDienThoai']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Địa chỉ:</strong></P> 
-                            <h6><?=$item['DiaChi']?></h6>
+                            <h6><?=$order['DiaChi']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Ghi chú:</strong></P> 
-                            <h6><?=$item['GhiChu']?></h6>
+                            <h6><?=$order['GhiChu']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Tổng tiền:</strong></P> 
-                            <h6><?=$item['TongTien']?></h6>
+                            <h6><?=$order['TongTien']?></h6>
                         </div>
                         <div class="infor__order__item">
                             <P><strong>Phương thức thanh toán:</strong></P> 
                             <?php 
-                                switch ($item['PhuongThucTT']) {
+                                switch ($order['PhuongThucTT']) {
                                     case '1':
                                         $pttt = "Trả tiền mặt khi nhận hàng";
                                         break;
@@ -147,12 +149,13 @@
                                 <?php
                                     $stt = 1;
                                     $TongTien = 0;
+                                    $viewsanphamorder = $data['viewsanphamorder'];
                                     foreach($viewsanphamorder as $item):
                                         $TongTien = $item['SoLuong']*$item['GiaSP'];
                                 ?>
                                 <tr>
                                     <th ><?=$stt?></th>
-                                    <td><img src="view/img/traicay/<?=$item['HinhAnh']?>" alt="" style="width:100px;"><?=$item['TenSP']?></td>
+                                    <td><img src="<?=APPURL?>public/img/traicay/<?=$item['HinhAnh']?>" alt="" style="width:100px;"><?=$item['TenSP']?></td>
                                     <td><?=number_format($item['GiaSP'],"0",",",".")?></td>
                                     <td><?=$item['SoLuong']?></td>
                                     <td><?=number_format($TongTien,"0",",",".")?></td>
@@ -178,3 +181,5 @@
             </div>
         </div>
     </div>
+
+    <?php include_once 'v_footer.php'; ?>

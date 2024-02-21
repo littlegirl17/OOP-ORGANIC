@@ -1,4 +1,4 @@
-
+<?php include_once 'v_myaccount_header.php' ?>
 
 <div class="title_myacount">
     <h4>Đơn hàng đã hủy</h4>
@@ -17,6 +17,7 @@
     <tbody>
         <?php 
             $stt = 1;
+            $canceledOrders = $data['canceledOrders'];
             foreach($canceledOrders as $item):
         ?>
         <tr class="listproduct_shadow">
@@ -55,7 +56,7 @@
                     }
                 ?>
             </td>
-            <td><a href="index.php?mod=myaccount&act=orderdahuydetail&MaDH=<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
+            <td><a href="<?=APPURL?>user/orderUnsetDetail/<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
         </tr>
         <?php
                 $stt++;
@@ -63,3 +64,4 @@
         ?>
     </tbody>
 </table>
+<?php include_once 'v_myaccount_footer.php' ?>

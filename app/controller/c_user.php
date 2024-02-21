@@ -23,7 +23,7 @@
                         $_SESSION['user'] = $kq;
                         $_SESSION['email'] = $_POST['Email'];
                         if($_SESSION['user']['Quyen'] >=1 ){
-                            header("location: index.php?mod=admin&act=dashboard");
+                            header("location: ".APPURL."admin/dashboard");
                         }elseif ($_SESSION['user']['Quyen'] ==0){
                             header("location: ".APPURL);
                         }

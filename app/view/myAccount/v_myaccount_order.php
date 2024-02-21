@@ -1,3 +1,4 @@
+<?php include_once 'v_myaccount_header.php' ?>
 <div class="title_myacount">
     <h4>Đơn hàng đang đặt</h4>
 </div>
@@ -18,7 +19,7 @@
         <?php 
         if(isset($_SESSION['iddh']) && ($_SESSION['iddh'])>0):
             $stt = 1;
-            
+            $viewsanphammyacc = $data['viewsanphammyacc'];
             foreach($viewsanphammyacc as $item):
         ?>
         <tr class="listproduct_shadow">
@@ -44,13 +45,13 @@
                 ?>
             </td>
             <?php if(isset($item['TrangThai']) && ($item['TrangThai']) == 0 OR ($item['TrangThai']) == 1): ?>
-                <td><a href="index.php?mod=myaccount&act=calldahuy&MaDH=<?=$item['MaDH']?>" class="a_huy" onclick="delete_donhang(<?=$item['MaDH']?>),event">Hủy đơn hàng</a></td>
+                <td><a href="<?=APPURL?>user/callUnset/<?=$item['MaDH']?>" class="a_huy" onclick="delete_donhang(<?=$item['MaDH']?>),event">Hủy đơn hàng</a></td>
             <?php else: ?>
                 <td onclick=" LoiHuyOrder()">Đã xác nhận <i class="fa-solid fa-check" style="color: #79db00;"></i></td>
             <?php endif; ?>
-            <td>
-                <?php
-                    switch ($item['TrangThai']) {
+            <td> 
+                <?php 
+                    switch ($item['TrangThai']){
                         case '0':
                             echo '<p style="text-align: center; color:#fff; padding:5px 5px; background-color: #F08080;">Đơn hàng mới</p>';
                             break;
@@ -78,7 +79,7 @@
                     }
                 ?>
             </td>
-            <td><a href="index.php?mod=myaccount&act=order_accountdetail&MaDH=<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
+            <td><a href="<?=APPURL?>user/orderDetail/<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
         </tr>
         <?php
                 $stt++;
@@ -87,25 +88,29 @@
         ?>
     </tbody>
 </table>
+    
     <div class="admin__pagein">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=myaccount&act=order_account&page=<?=$page-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+    <ul class="pagination">
+    <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
+            <a class="page-link" href="<?=APPURL?>user/myaccountOrder?page=<?=($data['page']-1)?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <?php 
+        $SoTrang = $data['SoTrang']; 
+        for($i=1; $i <= $SoTrang ; $i++): ?>
+            <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
+                <a class="page-link" href="<?=APPURL?>user/myaccountOrder?page=<?=$i?>"><?=$i?></a>
             </li>
-            <?php for($i=1; $i < $SoTrang ; $i++): ?>
-                <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                    <a class="page-link" href="index.php?mod=myaccount&act=order_account&page=<?=$i?>"><?=$i?></a>
-                </li>
-            <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=myaccount&act=order_account&page=<?=$page+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+        <?php endfor;  ?>
+        <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+        <a class="page-link" href="<?= APPURL?>user/myaccountOrder?page=<?= ($data['page'] + 1) ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
 <script>
     function LoiHuyOrder(){
         alert("Đơn hàng đã xác nhận, không thể hủy! " );
@@ -113,8 +118,9 @@
     function delete_donhang(MaDH){ //Tham so MATK nay duoc lay tu $ds['MaTk]
         var kq = confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?"); //Form duoc hien ra , neu nguoi ta bam XOA
         if(kq){//Neu bam CHON OK la ket qua dung thif no se chuyen den cai case nay va xoa, bien MaTk duoc lay tu o tren Tham so truyen vao
-            window.location = 'index.php?mod=myaccount&act=calldahuy&MaDH='+MaDH;
+            window.location = APPURL+'user/callUnset/'+MaDH;
         }
         event.preventDefault();
     }
 </script>
+<?php include_once 'v_myaccount_footer.php' ?>

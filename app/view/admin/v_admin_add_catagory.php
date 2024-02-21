@@ -1,3 +1,5 @@
+<?php include_once 'v_admin_header.php' ?>
+
 <form class="addPro" action="" method="post" enctype="multipart/form-data">
     <div class="main-content">
         <h3 class="title-page">
@@ -8,7 +10,7 @@
         </div>
         <section class="row">
             <div class="col-sm-12 col-md-12 col xl-12">
-                <div class="card chart">
+                <div class="card chart tableadmin">
                     
                         <div class="form-group">
                             <label for="name">Tên danh mục:</label>
@@ -52,3 +54,5 @@
     }
 
 </script>
+
+<?php include_once 'v_admin_footer.php' ?>

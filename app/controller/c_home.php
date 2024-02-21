@@ -17,11 +17,10 @@
         //Phương thức này thực hiện một số công việc liên quan đến trang chủ
 
         function index(){
-            $keyword="";
+            $keyword=$_GET['keyword'] ?? "";
             $this->titlepage = "Trang chủ Organic";
             // Show banner ở trang home
             $bannerHeader = $this->homeProductModel->load_banner_home();
-            
             $getdanhmucHeader = $this->homeCategoryModel->danhmuc_getAll();
             $getproNew = $this->homeProductModel->page_productNew($keyword);
             $getDiscount = $this->homeProductModel->page_productDiscount();

@@ -24,27 +24,10 @@
             return $this->data->pdo_query("SELECT * FROM binhluan bl INNER JOIN taikhoan tk ON bl.MaTK = tk.MaTK WHERE bl.MaSP=?",$MaSP);
         }
 
-
         // 
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-    
 
     function product_updateLuotXem($MaSP){
         pdo_execute("UPDATE sanpham SET LuotXem = LuotXem + 1 WHERE MaSP = ?",$MaSP);

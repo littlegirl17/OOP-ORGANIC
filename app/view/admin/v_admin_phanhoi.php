@@ -1,3 +1,4 @@
+<?php include_once 'v_admin_header.php' ?>
 <div class="main-content">
     <h3 class="title-page">
         Phản hồi 
@@ -72,3 +73,4 @@
         event.preventDefault();//sử dụng nó để ngăn chặn hành động mặc định
     }
 </script>
+<?php include_once 'v_admin_footer.php' ?>

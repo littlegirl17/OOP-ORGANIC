@@ -1,4 +1,4 @@
-
+<?php include_once 'v_myaccount_header.php' ?>
 <div class="title_myacount">
     <h4>Đơn hàng giao thành công</h4>
 </div>
@@ -17,6 +17,7 @@
         <?php
         if(isset($_SESSION['iddh']) && ($_SESSION['iddh'])>0):
             $stt = 1;
+            $viewhistoryorder = $data['viewhistoryorder'];
             foreach($viewhistoryorder as $item):
         ?>
         <tr class="listproduct_shadow">
@@ -54,7 +55,7 @@
                     }
                 ?>
             </td>
-            <td><a href="index.php?mod=myaccount&act=detail_account&MaDH=<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
+            <td><a href="<?=APPURL?>user/orderSuccessDetail/<?=$item['MaDH']?>" class="a_linkdetail">Xem chi tiết</a></td>
         </tr>
         <?php
                 $stt++;
@@ -63,22 +64,26 @@
         ?>
     </tbody>
 </table>
+
     <div class="admin__pagein">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=myaccount&act=history_account&page=<?=$page-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+    <ul class="pagination">
+    <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
+            <a class="page-link" href="<?=APPURL?>user/orderSuccess?page=<?=($data['page']-1)?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <?php 
+        $SoTrang = $data['SoTrang']; 
+        for($i=1; $i <= $SoTrang ; $i++): ?>
+            <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
+                <a class="page-link" href="<?=APPURL?>user/orderSuccess?page=<?=$i?>"><?=$i?></a>
             </li>
-            <?php for($i=1; $i < $SoTrang ; $i++): ?>
-                <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                    <a class="page-link" href="index.php?mod=myaccount&act=history_account&page=<?=$i?>"><?=$i?></a>
-                </li>
-            <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=myaccount&act=history_account&page=<?=$page+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+        <?php endfor;  ?>
+        <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+        <a class="page-link" href="<?= APPURL?>user/orderSuccess?page=<?= ($data['page'] + 1) ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</div>
+    <?php include_once 'v_myaccount_footer.php' ?>

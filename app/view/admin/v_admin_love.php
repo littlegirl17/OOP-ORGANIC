@@ -1,3 +1,4 @@
+<?php include_once 'v_admin_header.php' ?>
 <div class="main-content">
     <h3 class="title-page">
         Sản phẩm yêu thích 
@@ -43,6 +44,6 @@
 
     
 </div> 
-
+<?php include_once 'v_admin_footer.php' ?>
 
 

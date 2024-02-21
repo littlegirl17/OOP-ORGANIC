@@ -1,3 +1,5 @@
+<?php include_once 'v_admin_header.php' ?>
+
 <div class="main-content">
                 <h3 class="title-page">
                     Dashboards
@@ -11,7 +13,7 @@
                                         Tổng sản phẩm
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countProduct?></span>
+                                <span class="widget-numbers"><?= $countProduct = $data['countProduct']?></span>
                             </div>
                         </a>
                     </div>
@@ -24,7 +26,7 @@
                                         Tổng thành viên
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countUser?></span>
+                                <span class="widget-numbers"><?=$countUser = $data['countUser'] ?></span>
                             </div>
                         </a>
                     </div>
@@ -36,7 +38,7 @@
                                         Tổng bài viết
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countBlog?></span>
+                                <span class="widget-numbers"><?=$countBlog = $data['countBlog']?></span>
                             </div>
                         </a>
                     </div>
@@ -48,7 +50,7 @@
                                         Tổng danh mục
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countCatagory?></span>
+                                <span class="widget-numbers"><?=$countCatagory = $data['countCatagory']?></span>
                             </div>
                         </a>
                     </div>
@@ -60,7 +62,7 @@
                                         Tổng đơn hàng
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countOrder?></span>
+                                <span class="widget-numbers"><?=$countOrder = $data['countOrder']?></span>
                             </div>
                         </a>
                     </div>
@@ -72,7 +74,7 @@
                                         Tổng bình luận
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countCmt?></span>
+                                <span class="widget-numbers"><?=$countCmt = $data['countCmt']?></span>
                             </div>
                         </a>
                     </div>
@@ -84,7 +86,7 @@
                                         Tổng phản hồi
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countfeedback?></span>
+                                <span class="widget-numbers"><?=$countfeedback = $data['countfeedback']?></span>
                             </div>
                         </a>
                     </div> -->
@@ -96,7 +98,7 @@
                                         Tổng yêu thích
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countlove?></span>
+                                <span class="widget-numbers"><?=$countlove = $data['countlove']?></span>
                             </div>
                         </a>
                     </div>
@@ -113,7 +115,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($thongkeggchart as $item): ?>
+                                    <?php $thongkeggchart = $data['thongkeggchart']; foreach($thongkeggchart as $item): ?>
                                     <tr>
                                         <td class="text-start"><?=$item['TenDM']?></td>
                                         <td><?=$item['SoLuong']?></td>
@@ -161,3 +163,6 @@
         chart.draw(data, options);
     }
 </script>
+
+
+<?php include_once 'v_admin_footer.php' ?>

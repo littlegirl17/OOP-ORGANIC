@@ -1,16 +1,16 @@
-
+<?php include_once 'v_admin_header.php' ?><div class="card chart tableadmin"> 
 <form class="addPro" action="" method="post" enctype="multipart/form-data">
     <div class="main-content">
         <h3 class="title-page">
             Thêm  sản phẩm mới
         </h3>
         <div class="d-flex justify-content-end">
-    <input type="submit" class="btn btn-primary mb-2" name="submit" value="Lưu" onclick="return sanpham_checkadd()">
+    <input type="submit" class="btn btn-primary mb-2" value="Lưu" onclick="return sanpham_checkadd()">
 </div>
 
 <section class="row">
     <div class="col-sm-12 col-md-12 col xl-12">
-        <div class="card chart"> 
+        
             
             <div class="form-group">
                 <label for="TenSP">Tên sản phẩm:</label>
@@ -52,7 +52,7 @@
 
             <select name="MaDM" id="MaDM" class="admin__select">
                 <option value="0">Chọn danh mục của sản phẩm</option>
-                <?php foreach($danhmucall as $dm): ?>
+                <?php $danhmucall = $data['admin_danhmucall']; foreach($danhmucall as $dm): ?>
                     <option value="<?=$dm['MaDM']?>"><?=$dm['TenDM']?></option>
                 <?php endforeach; ?>
             </select>
@@ -60,9 +60,9 @@
         </div>
     </div>
 </section>
-    </div> 
+    
 </form>
-
+</div> 
 <script>
     function sanpham_checkadd(){
         var TenSP = document.getElementById("TenSP");
@@ -95,3 +95,4 @@
     }
 </script>
     
+<?php include_once 'v_admin_footer.php' ?>

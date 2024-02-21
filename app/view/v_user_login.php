@@ -61,7 +61,6 @@
                     </div>
                 <?php endif; unset($_SESSION['canhbao']); ?>
                 <h1><a href="">Đăng Nhập</a></h1>
-                <form action="">
                     <div class="form-input">
                         <div class="form__login">
                             <input type="text" name="Email" id="Email" placeholder="Nhập email của bạn!"><i class="fa-regular fa-envelope" style="color: #7FAD39;"></i>
@@ -72,7 +71,6 @@
                         
                     <input type="submit"  onclick="return kiemtra_dn()" value="Đăng nhập" class="submit">
                     </div>
-                </form>
                 <div id="alert-login" class="baoloi_dangky" ></div>
                 <div class="form-bot-1">
                     <a href="">Quên mật khẩu</a>
