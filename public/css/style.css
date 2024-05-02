@@ -131,7 +131,7 @@ ol {
 	right: 0;
 	height: 4px;
 	width: 80px;
-	background: #7fad39;
+	background: #42855b;
 	content: "";
 	margin: 0 auto;
 }
@@ -169,7 +169,7 @@ ol {
 	color: #ffffff;
 	text-transform: uppercase;
 	font-weight: 700;
-	background: #7fad39;
+	background: #42855b;
 	letter-spacing: 2px;
 }
 
@@ -180,7 +180,7 @@ ol {
 	text-transform: uppercase;
 	display: inline-block;
 	padding: 13px 30px 12px;
-	background: #7fad39;
+	background: #42855b;
 	border: none;
 }
 
@@ -453,7 +453,7 @@ ol {
 }
 
 .header__menu ul li .header__menu__dropdown li:hover>a {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .header__menu ul li .header__menu__dropdown li a {
@@ -464,7 +464,7 @@ ol {
 }
 
 .header__menu ul li.active a {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .header__menu ul li:hover .header__menu__dropdown {
@@ -474,7 +474,7 @@ ol {
 }
 
 .header__menu ul li:hover>a {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .header__menu ul li:last-child {
@@ -532,7 +532,7 @@ ol {
 .header__cart ul li a span {
 	height: 13px;
 	width: 13px;
-	background: #7fad39;
+	background: #42855b;
 	font-size: 10px;
 	color: #ffffff;
 	line-height: 13px;
@@ -597,7 +597,7 @@ ol {
 }
 
 .hero__categories__all {
-	background: #7fad39;
+	background: #42855b;
 	position: relative;
 	padding: 10px 25px 10px 40px;
 	cursor: pointer;
@@ -710,7 +710,7 @@ ol {
 
 .hero__search__phone__icon {
 	font-size: 18px;
-	color: #7fad39;
+	color: #42855b;
 	height: 50px;
 	width: 50px;
 	background: #f5f5f5;
@@ -749,7 +749,7 @@ ol {
 	text-transform: uppercase;
 	font-weight: 700;
 	letter-spacing: 4px;
-	color: #7fad39;
+	color: #42855b;
 }
 
 .hero__text h2 {
@@ -852,7 +852,7 @@ ol {
 	bottom: -2px;
 	width: 100%;
 	height: 2px;
-	background: #7fad39;
+	background: #42855b;
 	content: "";
 	opacity: 0;
 }
@@ -907,8 +907,8 @@ ol {
 }
 
 .featured__item__pic__hover li:hover a {
-	background: #7fad39;
-	border-color: #7fad39;
+	background: #42855b;
+	border-color: #42855b;
 }
 
 .featured__item__pic__hover li:hover a i {
@@ -984,11 +984,11 @@ ol {
 	display: flex;
 	justify-content: center;
 	color: #fff;
-	background-color: #7fad39;
+	background-color: #42855b;
 	transition: all 0.3s;
 }
 .intro input:hover{
-	border: 1px solid #7fad39;
+	border: 1px solid #42855b;
     background-color: #ffffff;
     color: #000;
     transform: translateX(10px); /* Chuyển động input từ trái sang phải */
@@ -1415,8 +1415,8 @@ ol {
 }
 
 .product__item__pic__hover li:hover a {
-	background: #7fad39;
-	border-color: #7fad39;
+	background: #42855b;
+	border-color: #42855b;
 }
 
 .product__item__pic__hover li:hover a i {
@@ -1615,7 +1615,7 @@ ol {
 }
 
 .filter__option span:hover {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .product__item {
@@ -1656,8 +1656,8 @@ ol {
 }
 
 .product__item__pic__hover li:hover a {
-	background: #7fad39;
-	border-color: #7fad39;
+	background: #42855b;
+	border-color: #42855b;
 }
 
 .product__item__pic__hover li:hover a i {
@@ -1737,8 +1737,8 @@ ol {
 
 .product__pagination a:hover,
 .blog__pagination a:hover {
-	background: #7fad39;
-	border-color: #7fad39;
+	background: #42855b;
+	border-color: #42855b;
 	color: #ffffff;
 }
 
@@ -1818,15 +1818,13 @@ ol {
 	margin-bottom: 5px;
 }
 
-.product__details__text .heart-icon {
+.product__details__text .heart-icon i{
 	display: inline-block;
 	font-size: 16px;
-	color: #6f6f6f;
-	padding: 13px 16px 13px;
-	background: #f5f5f5;
+	color: #000000;
+	padding: 20px 16px 13px;
 }
-.product__details__text .heart-icon.wishlist-active {
-	
+.product__details__text .heart-icon.wishlist-active i {
     color: #ff0400; /* Change this to your desired color, e.g., green */
     /* Add any other styles for the active state here */
 }
@@ -2259,7 +2257,7 @@ ol {
 
 .checkout__radio__1 input:checked + span {/* + span để chọn phần tử <span> ngay sau khi checkbox được chọn*/
     font-weight: 600;
-    color: #7fad39; 
+    color: #42855b; 
 }
 
 .checkout__input__checkbox {
@@ -2280,8 +2278,8 @@ ol {
 }
 
 .checkout__input__checkbox label input:checked~.checkmark {
-	background: #7fad39;
-	border-color: #7fad39;
+	background: #42855b;
+	border-color: #42855b;
 }
 
 .checkout__input__checkbox label input:checked~.checkmark:after {
@@ -2508,7 +2506,7 @@ ol {
 }
 
 .blog__sidebar__item ul li a:hover {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .blog__sidebar__search {
@@ -2728,7 +2726,7 @@ ol {
 }
 
 .blog__details__widget .blog__details__social a:hover {
-	color: #7fad39;
+	color: #42855b;
 }
 
 .blog__details__widget .blog__details__social a:last-child {
@@ -2846,7 +2844,7 @@ ol {
 }
 
 .footer__widget .footer__widget__social a:hover {
-	background: #7fad39;
+	background: #42855b;
 	color: #ffffff;
 	border-color: #ffffff;
 }
@@ -2884,7 +2882,7 @@ ol {
 
 .contact__widget span {
 	font-size: 36px;
-	color: #7fad39;
+	color: #42855b;
 }
 
 .contact__widget h4 {
@@ -2919,7 +2917,7 @@ h1{
 }
 h1 a{
     text-decoration: none;
-    color:#7FAD39;
+    color:#42855b;
 }
 .form-dn-1{
     text-align: center;
@@ -2996,7 +2994,7 @@ h1 a{
 	border-bottom: 1px solid rgb(210, 207, 207);
 }
 .form-input .submit{
-    background-color: #7FAD39;
+    background-color: #42855b;
     color: #fff;
     border-radius: 10px;
 }
@@ -3064,7 +3062,7 @@ select {
 
 .map .map-inside i {
 	font-size: 48px;
-	color: #7fad39;
+	color: #42855b;
 	position: absolute;
 	bottom: -75px;
 	left: 50%;
@@ -3137,7 +3135,7 @@ select {
 	padding: 5px 0;
 }
 .infor__order__item h6{
-	color: #7FAD39;
+	color: #42855b;
 	margin-top: -15px;
 	padding-left: 10px;
 	font-weight: 500;
@@ -3156,7 +3154,7 @@ select {
 	position: relative;
 	background-color: transparent;
 	cursor: pointer;
-	border: 1px solid #7FAD39;
+	border: 1px solid #42855b;
 	overflow: hidden;
 	color: #333;
 	transition: all 0.5s ease-in-out;
@@ -3168,7 +3166,7 @@ select {
 	font-weight: 800;
 	letter-spacing: 2px;
 	text-decoration:none;
-	color: #7FAD39;
+	color: #42855b;
 }
 
 .type1::after {
@@ -3177,7 +3175,7 @@ select {
 	left: 0;
 	top: 0;
 	transition: all 0.5s ease-in-out;
-	background-color: #7FAD39;
+	background-color: #42855b;
 	border-radius: 30px;
 	visibility: hidden;
 	height: 10px;
@@ -3352,11 +3350,11 @@ select {
 }
 .sidebar__myaccount ul li:hover {
 	background-color: #ffffff;
-	color: #7FAD39;
-	border: 1px solid #7FAD39; 
+	color: #42855b;
+	border: 1px solid #42855b; 
 }
 .sidebar__myaccount ul li:hover a {
-	color: #7FAD39;
+	color: #42855b;
 }
 .sidebar__myaccount ul li a{
 	color: #fffefe;
@@ -3373,13 +3371,13 @@ select {
 }
 .back_myaccount a:hover{
 	text-decoration: underline;
-	color: #7FAD39;
+	color: #42855b;
 }
 /*
 	a
 */
 .a_linkdetail:hover{
-	color: #7FAD39;
+	color: #42855b;
 	text-decoration: underline;
 }
 .a_huy{
@@ -3397,10 +3395,54 @@ select {
 	color: red;
 	text-align: center;
 }
-
 /*
 
 */
+.message{
+	color: red;
+	text-align: center;
+}
+/*
+
+*/
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	border-radius: 5px;
+  }
+  
+  .close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+  }
+  /*
+
+  */
+  
 .submitmomo{
 	margin: 20px 0;
 	background-color: #D82D8B;
@@ -3566,7 +3608,7 @@ select {
 	.humberger__menu__cart ul li a span {
 		height: 13px;
 		width: 13px;
-		background: #7fad39;
+		background: #42855b;
 		font-size: 10px;
 		color: #ffffff;
 		line-height: 13px;
@@ -3632,7 +3674,7 @@ select {
 		-webkit-border-radius: 0;
 		border-radius: 0;
 		background: transparent;
-		color: #7fad39;
+		color: #42855b;
 	}
 	.humberger__menu__wrapper .slicknav_nav .slicknav_row,
 	.humberger__menu__wrapper .slicknav_nav a {
@@ -3828,7 +3870,7 @@ select {
 	.humberger__menu__cart ul li a span {
 		height: 13px;
 		width: 13px;
-		background: #7fad39;
+		background: #42855b;
 		font-size: 10px;
 		color: #ffffff;
 		line-height: 13px;
@@ -3895,7 +3937,7 @@ select {
 		-webkit-border-radius: 0;
 		border-radius: 0;
 		background: transparent;
-		color: #7fad39;
+		color: #42855b;
 	}
 	.humberger__menu__wrapper .slicknav_nav .slicknav_row,
 	.humberger__menu__wrapper .slicknav_nav a {

@@ -24,41 +24,53 @@
             return $this->data->pdo_query("SELECT * FROM binhluan bl INNER JOIN taikhoan tk ON bl.MaTK = tk.MaTK WHERE bl.MaSP=?",$MaSP);
         }
 
-        // 
+        //Hàm giả số lượng sách khi người dùng đã mượn thì nó phải giảm xuống
+        function product_giamsl($MaSP,$SoLuong){//giảm số lượng của cuốn sách nào đó
+            $this->data->pdo_execute("UPDATE tonkho SET SoLuong = SoLuong - ? WHERE MaSP=?",$SoLuong,$MaSP);
+        }
+
+        //
+        function product_updateLuotXem($MaSP){
+            $this->data->pdo_execute("UPDATE sanpham SET LuotXem = LuotXem + 1 WHERE MaSP = ?",$MaSP);
+        }
+
+        //
+        function product_detaillove($MaSP, $MaTK, $YeuThich){
+            return $this->data->pdo_query_one("SELECT * FROM yeuthich WHERE MaSP=? AND MaTK=? AND YeuThich=?", $MaSP, $MaTK, $YeuThich);
+        }
+    
+        function product_addToWishlist($MaSP, $MaTK,$YeuThich){
+            $this->data->pdo_execute("INSERT INTO yeuthich (`MaSP`,`MaTK`,`YeuThich`) VALUES (?,?,?)",$MaSP,$MaTK,$YeuThich);
+        }
+    
+        //detail
+        function product_removeFromWishlist($MaSP, $MaTK, $YeuThich) {
+            $this->data->pdo_execute("DELETE FROM yeuthich WHERE MaSP=? AND MaTK=? AND YeuThich=?", $MaSP, $MaTK, $YeuThich);
+        }
+    
+        function product_yeuthich(){
+            return $this->data->pdo_query("SELECT * FROM yeuthich yt INNER JOIN sanpham sp ON yt.MaSP=sp.MaSP ORDER BY MaYT DESC");
+        }
+    
+        function product_Countyeuthich(){
+            $countlove = $this->data->pdo_query("SELECT * FROM yeuthich yt INNER JOIN sanpham sp ON yt.MaSP=sp.MaSP ORDER BY MaYT DESC");
+            return count($countlove);
+        }
+    
+        function product_deleteyeuthich($MaSP) {
+            $this->data->pdo_execute("DELETE FROM yeuthich WHERE MaSP=? ", $MaSP);
+        }
+
     }
 
 
-
-    function product_updateLuotXem($MaSP){
-        pdo_execute("UPDATE sanpham SET LuotXem = LuotXem + 1 WHERE MaSP = ?",$MaSP);
-    }
 
     
 
-    function product_detaillove($MaSP, $MaTK, $YeuThich){
-        return pdo_query_one("SELECT * FROM yeuthich WHERE MaSP=? AND MaTK=? AND YeuThich=?", $MaSP, $MaTK, $YeuThich);
-    }
+    
 
-    function product_addToWishlist($MaSP, $MaTK,$YeuThich){
-        pdo_execute("INSERT INTO yeuthich (`MaSP`,`MaTK`,`YeuThich`) VALUES (?,?,?)",$MaSP,$MaTK,$YeuThich);
-    }
-
-    //detail
-    function product_removeFromWishlist($MaSP, $MaTK, $YeuThich) {
-        pdo_execute("DELETE FROM yeuthich WHERE MaSP=? AND MaTK=? AND YeuThich=?", $MaSP, $MaTK, $YeuThich);
-    }
-
-    function product_yeuthich(){
-        return pdo_query("SELECT * FROM yeuthich yt INNER JOIN sanpham sp ON yt.MaSP=sp.MaSP ORDER BY MaYT DESC");
-    }
-
-    function product_Countyeuthich(){
-        $countlove = pdo_query("SELECT * FROM yeuthich yt INNER JOIN sanpham sp ON yt.MaSP=sp.MaSP ORDER BY MaYT DESC");
-        return count($countlove);
-    }
-
-    function product_deleteyeuthich($MaSP) {
-        pdo_execute("DELETE FROM yeuthich WHERE MaSP=? ", $MaSP);
-    }
+   
 //
+
+    
 ?>

@@ -88,7 +88,7 @@
     
 <div class="admin__pagein">
     <ul class="pagination">
-    <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
+        <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
             <a class="page-link" href="<?=APPURL?>admin/product?page=<?=($data['page']-1)?>" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>

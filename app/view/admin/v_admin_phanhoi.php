@@ -20,6 +20,7 @@
                     </thead>
                     <tbody>
                         <?php 
+                            $phanhoiAll = $data['phanhoiAll'];
                             $stt = 1; 
                             foreach($phanhoiAll as $item):
                         ?>

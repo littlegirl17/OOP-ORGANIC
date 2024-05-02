@@ -1,9 +1,11 @@
 <?php
-        namespace App\controller;
+    
+        namespace App\controller; 
         use App\model\m_product;
         use App\model\m_page;
         use App\model\m_order;
-
+        
+    
     class c_product extends c_base{
         private $htmlProductModel;
         private $htmlPageModel;
@@ -13,7 +15,19 @@
             $this->htmlProductModel = new m_product;
             $this->htmlPageModel = new m_page;
             $this->htmlOrderModel = new m_order;
+            
         }
+
+        function comment(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $MaTK = $_SESSION['user']['MaTK'];
+                $MaSP = $_POST['MaSP'];
+                $NoiDung = $_POST['NoiDung'];
+                $this->htmlProductModel->binhuan_add($MaSP,$MaTK,$NoiDung);
+                header("location: ".APPURL."product/detail/".$MaSP);
+            }
+        }
+        
 
         function DetailProduct(){
             //preg_matchđược sử dụng để trích xuất phần số sau /product/detail/từ $_SERVER['REQUEST_URI']
@@ -24,6 +38,7 @@
                 if(is_array($detail_product)){
                     //print_r($matches);
                     $this->titlepage = $detail_product['TenSP'];
+                    $this->htmlProductModel->product_updateLuotXem($MaSP);
                     $detailrelate = $this->htmlProductModel->product_lienquanRanDom($detail_product['MaDM']);
                     $loadcomment = $this->htmlProductModel->get_byproductcomment($MaSP);
                     $bannerItem = $this->htmlPageModel->load_banner_Item(); // Show banner ở trang khác
@@ -36,6 +51,32 @@
                     $this->renderView("v_product_detail", $this->titlepage, $this->data);
                 }else{
                     header("location:".APPURL);
+                }
+                
+                if ($_SERVER['REQUEST_METHOD']) {
+                    $MaTK = $_POST['MaTK'];
+                    $YeuThich = $_POST['YeuThich'];
+                
+                    $isInWishlist = $this->htmlProductModel->product_detaillove($MaSP, $MaTK, $YeuThich);
+
+                    if (!$isInWishlist) {
+                        // Sản phẩm chưa có trong danh sách yêu thích, thêm vào
+                        $this->htmlProductModel->product_addToWishlist($MaSP, $MaTK, $YeuThich);
+                        $_SESSION['wishlist_active'][$MaSP] = 'wishlist-active';
+                        $_SESSION['success_thongbao'] = 'Đã thêm sản phẩm yêu thích';
+                        
+                    }
+
+                    if ($isInWishlist && $isInWishlist['MaSP'] == $MaSP) {
+                        // Sản phẩm đã có trong danh sách yêu thích với sản phẩm khác, xóa nó trước
+                        $this->htmlProductModel->product_removeFromWishlist($MaSP, $MaTK, $YeuThich);
+                        unset($_SESSION['wishlist_active'][$isInWishlist['MaSP']]);
+                        $_SESSION['success_thongbao'] = 'Đã hủy yêu thích sản phẩm';
+                    }
+                    
+                    // Thêm sản phẩm vào danh sách yêu thích
+                    header("location: ".APPURL."product/detail/".$MaSP);
+                    
                 }
             }else{
                 echo 'kk';
@@ -55,6 +96,10 @@
             //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.). //$_SERVER['REQUEST_METHOD']là một biến superglobal chứa phương thức yêu cầu được sử dụng để truy cập trang
             //Khi bạn muốn kiểm tra xem biểu mẫu đã được gửi bằng phương thức HTTP POST hay chưa
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // Kiểm tra xem $_SESSION['mygiohang'] đã tồn tại chưa
+                if (!isset($_SESSION['mygiohang'])) {
+                    $_SESSION['mygiohang'] = array(); // Khởi tạo giỏ hàng nếu chưa tồn tại
+                }
                 $MaSP = $_POST['MaSP'];
                 $HinhAnh = $_POST['HinhAnh'];
                 $GiaSP = $_POST['GiaSP'];
@@ -86,9 +131,10 @@
                         "TenSP"=>$TenSP,
                         "SoLuong"=>$SoLuong
                     ];
-                    $_SESSION['mygiohang'][] = $cart;
+                    $_SESSION['mygiohang'][] = $cart;// Sau khi thêm sản phẩm vào giỏ hàng thành công
                 }
-                header("location: ".APPURL);
+                $_SESSION['added_to_cart'] = true; // Đánh dấu rằng một sản phẩm đã được thêm vào giỏ hàng
+                header("location:" . APPURL);
             }
 
             //View ra trang
@@ -131,9 +177,12 @@
             header("location: ".APPURL."product/cart");
         }
 
-        public function checkout(){
+        public function checkout(){ 
             $this->titlepage = "Trang thanh toán";
 
+            if (empty($_SESSION['mygiohang'])) {
+                header("location: ".APPURL."");
+            }
                 // LẤY DỮ LIỆU TỪ FORM
                     // đoạn mã này là xác định liệu người dùng đã đăng nhập hay chưa
                     if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -166,7 +215,7 @@
 
                     if(isset($_SESSION['mygiohang']) && is_array($_SESSION['mygiohang'])){
                         foreach($_SESSION['mygiohang'] as $item){
-                            
+                            $this->htmlProductModel->product_giamsl($item['MaSP'],$item['SoLuong']);
                             $this->htmlOrderModel->order_soluong($iddh,$item['MaSP']);
                             //Thêm nó vào chi tiêt đơn hàng 
                             $this->htmlOrderModel->addOrder($iddh,$item['MaSP'],$item['GiaSP'],$item['SoLuong']); //$iddh là để nó biết lấy theo cái mã iddh nào
@@ -201,8 +250,8 @@
                             //             </ul>';
                                         
                             // $MailDatHang = $_SESSION['email'];
-                            // $mail = new Mailer();
-                            // $mail->DatHangEmail($TieuDe,$NoiDung,$MailDatHang);
+                            // $mailer = new Mailer();
+                            // $mailer->DatHangEmail($TieuDe,$NoiDung,$MailDatHang);
                             // //Chuyển đến trang đơn hàng (Hóa đơn)
                             header("location:".APPURL."order/vieworder");
                             unset($_SESSION['mygiohang']);
@@ -408,6 +457,16 @@
             $this->data['viewdonhang'] = $viewdonhang;
             $this->data['viewsanphamorder'] = $viewsanphamorder;
             $this->renderView("v_product_order", $this->titlepage, $this->data);
+        }
+
+        function love(){
+            $this->titlepage = "Trang yêu thích";
+
+            $getyeuthich = $this->htmlProductModel->product_yeuthich();
+
+            $this->data['getyeuthich'] = $getyeuthich;
+
+            $this->renderView("v_product_yeuthich", $this->titlepage ,$this->data);
         }
     }
 

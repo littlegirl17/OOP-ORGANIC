@@ -1,10 +1,12 @@
+<?php include_once 'v_admin_header.php' ?>
+
 <form class="addPro" action="" method="post" enctype="multipart/form-data">
     <div class="main-content">
         <h3 class="title-page">
             Thêm mới người dùng
         </h3>
         <div class="d-flex justify-content-end">
-            <input type="submit" class="btn btn-primary mb-2" name="submit" value="Lưu" onclick="return user_checkadd()">
+            <input type="submit" class="btn btn-primary mb-2" value="Lưu" onclick="return user_checkadd()">
         </div>
 
         <?php if(isset($_SESSION['canhbaoEmail'])): ?>
@@ -125,3 +127,4 @@
     }
 </script>
     
+<?php include_once 'v_admin_footer.php' ?>

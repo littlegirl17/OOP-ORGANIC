@@ -57,10 +57,12 @@
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $checkEmail = $this->htmlUserModel->user_checkRegister($_POST['Email']);
                 $checkSDT = $this->htmlUserModel->user_checksdtRegister($_POST['SoDienThoai']);
-                if($checkEmail == TRUE || $checkSDT  == TRUE){
+                if($checkEmail == TRUE ){
                     if($checkEmail){
                         $_SESSION['canhbaoEmail'] = "Email đã tồn tại, vui lòng nhập email khác";
                     }
+                    
+                }else if($checkSDT  == TRUE){
                     if($checkSDT){
                         $_SESSION['canhbaoSDT'] = "Số điện thoại đã tồn tại, vui lòng nhập Số điện thoại khác";
                     }

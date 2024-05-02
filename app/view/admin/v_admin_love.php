@@ -21,6 +21,7 @@
                     </thead>
                     <tbody>
                         <?php 
+                            $admingetyeuthich = $data['admingetyeuthich'];
                             $stt = 1; 
                             foreach($admingetyeuthich as $item):
                         ?>
@@ -28,7 +29,7 @@
                             <td><?=$stt?></td>
                             <td><?=$item['MaSP']?></td>
                             <td><?=$item['MaTK']?></td>
-                            <td><img src="view/img/traicay/<?=$item['HinhAnh']?>" alt=""></td>
+                            <td><img src="<?=APPURL?>public/img/traicay/<?=$item['HinhAnh']?>" alt=""></td>
                             <td><?=$item['TenSP']?></td>
                             
                         </tr>

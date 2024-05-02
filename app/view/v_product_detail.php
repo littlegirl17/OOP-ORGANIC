@@ -3,8 +3,15 @@
 
     <?php
         include_once 'v_header.php';
-        $detail_product = $data['detail_product_byID']; 
-    ?>
+        $detail_product = $data['detail_product_byID'];
+
+        if (isset($_SESSION['success_thongbao'])) {
+            echo "<script>alert('{$_SESSION['success_thongbao']}');</script>";
+            unset($_SESSION['success_thongbao']);
+        }
+
+        
+?>
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
                     <div class="container">
@@ -13,7 +20,7 @@
                                 <div class="hero__categories">
                                     <div class="hero__categories__all">
                                         <i class="fa fa-bars"></i>
-                                        <span>All danh mục</span>
+                                        <span>Danh mục Organic</span>
                                     </div>
                                     <ul>
                                         <li><a href="#">Fresh Meat</a></li>
@@ -31,27 +38,23 @@
                                 </div>
                             </div>
                             <div class="col-lg-9">
-                                <div class="hero__search">
-                                    <div class="hero__search__form">
-                                        <form action="#">
-                                            <div class="hero__search__categories">
-                                                All danh mục
-                                                <span class="arrow_carrot-down"></span>
-                                            </div>
-                                            <input type="text" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                            <button type="submit" class="site-btn">SEARCH</button>
-                                        </form>
-                                    </div>
-                                    <div class="hero__search__phone">
-                                        <div class="hero__search__phone__icon">
-                                            <i class="fa fa-phone"></i>
-                                        </div>
-                                        <div class="hero__search__phone__text">
-                                                <h5>+035 312 3771</h5>
-                                                <span>Hỗ trợ khách hàng</span>
-                                        </div>
-                                    </div>
+                            <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="" method="GET" >
+                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?" value="<?php echo $_GET['keyword'] ?? '' ?>">
+                                        <button type="submit" class="site-btn" id="searchBtn">Tìm kiếm</button>
+                                    </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
                                 </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>+035 312 3771</h5>
+                                    <span>Hỗ trợ khách hàng</span>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
@@ -125,16 +128,15 @@
                                     <input type="submit" value="Thêm vào giỏ hàng" name="submitaddtocart" class="primary-btn">
                                 </form>
                                 <?php if(isset($_SESSION['user']['MaTK'])): ?>
-                                <form id="loveform" action="index.php?mod=product&act=detail" method="post">
+                                    <form id="loveform" action="" method="post">
                                     <input type="hidden" name="MaTK" value="<?=$_SESSION['user']['MaTK']?>">
                                     <input type="hidden" name="MaSP" value="<?=$detail_product['MaSP']?>">
                                     <input type="hidden" name="YeuThich" value="1">
-                                    <button type="submit" id="loveButton" class="heart-icon" name="submitYeuThich" <?= isset($_SESSION['wishlist_active'][$detail_product['MaSP']]) ? $_SESSION['wishlist_active'][$detail_product['MaSP']] : '' ?> onclick="addlove()"> 
-                                        <span class="icon_heart_alt"></span>
-                                    </button>
-                                </form>
+                                        <button type="submit" id="loveButton" class="heart-icon" <?= isset($_SESSION['wishlist_active'][$detail_product['MaSP']]) ? $_SESSION['wishlist_active'][$detail_product['MaSP']] : '' ?>  onclick="addlove()"> 
+                                            <span class="icon_heart_alt"><i class="fa-solid fa-heart"></i></span>
+                                        </button>
+                                    </form>
                                 
-                                    
                                 <?php endif; ?>
                             </div>
                         <?php else: ?>
@@ -220,14 +222,14 @@
             <?php endforeach; ?>
             <!-- Nếu nó tồn tại session['user'] thì mình mới cho nó quyền ĐƯỢC BÌNH LUẬN -->
             <?php if(isset($_SESSION['user'])):?>
-                <form  action="index.php?mod=product&act=binhluan" method="POST"> <!-- vi minh lam doc loc -->
+                <form  action="<?=APPURL?>product/comment" method="POST"> <!-- vi minh lam doc loc -->
                     <input type="hidden" name="MaSP" value="<?=$detail_product['MaSP']?>">
                     <div class="form-detail">
                         <label for="">Nhận xét của bạn</label><br>
                         <input type="text" name="NoiDung" class="Noidungcmt">
                     </div>
                     <div class="form-detail">
-                        <button type="submit" class="btn btn-success" name="submitbinhluan">Gửi bình luận</button>
+                        <button type="submit" class="btn btn-success" >Gửi bình luận</button>
                     </div>
                 </form>
             <?php endif;?>
@@ -303,6 +305,7 @@
     </section>
 
     <script>
+        
         function incrementQuantity() {
             var quantityInput = document.getElementById('quantityInput');
             quantityInput.value = parseInt(quantityInput.value) + 1;

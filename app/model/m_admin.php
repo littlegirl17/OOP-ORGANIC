@@ -227,16 +227,16 @@
             return $this->data->pdo_query_value("SELECT COUNT(*) FROM baiviet");
         }
         // Thêm
-        function add_post($TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa, $NgayViet, $MaDM){
-            $this->data->pdo_execute("INSERT INTO baiviet (`TieuDe`, `HinhAnh`, `HinhAnhDetail`, `MoTaNgan`, `MoTa`,`NgayViet`, `MaDM`) VALUES (?, ?, ?, ?, ?, ?, ?) ", $TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa,$NgayViet, $MaDM);
+        function add_post($TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa, $NgayViet){
+            $this->data->pdo_execute("INSERT INTO baiviet (`TieuDe`, `HinhAnh`, `HinhAnhDetail`, `MoTaNgan`, `MoTa`,`NgayViet`) VALUES (?, ?, ?, ?, ?, ?) ", $TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa,$NgayViet);
         }
         // Sửa
         function get_postId($MaBV){
             return $this->data->pdo_query_one("SELECT * FROM baiviet WHERE MaBV = ?", $MaBV);
         }
 
-        function update_post($MaBV, $TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa, $MaDM){
-            $this->data->pdo_execute("UPDATE baiviet SET TieuDe = ?, HinhAnh = ?, HinhAnhDetail = ?, MoTaNgan = ?, MoTa = ?, MaDM = ? WHERE MaBV = ?",$TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa, $MaDM,$MaBV);
+        function update_post($MaBV, $TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa){
+            $this->data->pdo_execute("UPDATE baiviet SET TieuDe = ?, HinhAnh = ?, HinhAnhDetail = ?, MoTaNgan = ?, MoTa = ? WHERE MaBV = ?",$TieuDe, $HinhAnh, $HinhAnhDetail, $MoTaNgan, $MoTa,$MaBV);
         }
 
         // Xóa

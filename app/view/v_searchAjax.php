@@ -1,11 +1,12 @@
 <?php
-
+    include_once '../config/database.php';
     include_once '../model/m_pdo.php';
+    $pdo = new \App\model\m_pdo();
     
                 if(isset($_POST['input'])){
                     $input = $_POST['input'];
                     $sql = "SELECT * FROM sanpham WHERE TenSP LIKE '%{$input}%'  ORDER BY MaSP DESC LIMIT 8";
-                    $result = pdo_query($sql);
+                    $result = $pdo->pdo_query($sql);
                     if (!empty($result)) {
                         echo ' 
                             <div class="row">
@@ -38,7 +39,7 @@
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="featured__item">
                                     <div class="featured__item__pic set-bg" >
-                                        <img src="view/img/traicay/'.$item['HinhAnh'].'" alt="">
+                                        <img src="public/img/traicay/'.$item['HinhAnh'].'" alt="">
                                         
                                     </div>
                                     <div class="featured__item__text">
@@ -85,5 +86,4 @@
                 }
                 }
                 
-               
 ?>

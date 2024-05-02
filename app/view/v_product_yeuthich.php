@@ -1,3 +1,8 @@
+<?php
+        include_once 'v_header.php';
+        $getyeuthich= $data['getyeuthich'];
+    ?>
+
 <!-- Hero Section Begin -->
 <section class="hero hero-normal">
         <div class="container">
@@ -6,7 +11,7 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All departments</span>
+                            <span>Danh mục Organic</span>
                         </div>
                         <ul>
                             <li><a href="#">Fresh Meat</a></li>
@@ -24,27 +29,23 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
+                <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="" method="GET" >
+                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?" value="<?php echo $_GET['keyword'] ?? '' ?>">
+                                        <button type="submit" class="site-btn" id="searchBtn">Tìm kiếm</button>
+                                    </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
                                 </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
+                                <div class="hero__search__phone__text">
+                                    <h5>+035 312 3771</h5>
+                                    <span>Hỗ trợ khách hàng</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -52,7 +53,7 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="view/img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="<?=APPURL?>public/img/breadcrumb.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -89,7 +90,7 @@
                                         <tr>
                                             <td><?=$stt?></td>
                                             <td class="shoping__cart__item">
-                                                <a href="index.php?mod=product&act=detail&MaSP=<?=$item['MaSP']?>"><img src="view/img/traicay/<?=$item['HinhAnh']?>" alt=""></a>
+                                                <a href="index.php?mod=product&act=detail&MaSP=<?=$item['MaSP']?>"><img src="<?=APPURL?>public/img/traicay/<?=$item['HinhAnh']?>" alt=""></a>
                                                 <h5><a href="index.php?mod=product&act=detail&MaSP=<?=$item['MaSP']?>" style="color:#000;"><?=$item['TenSP']?></a></h5>
                                             </td>
                                             <td><a href=""><span class="icon_heart_alt" style="color:red;"></span></a></td>
@@ -99,7 +100,7 @@
                                 </tbody>
                             </table> 
                         <?php else: ?>
-                            <img src="view/img/love.png" alt="" style="width:70%;">
+                            <img src="<?=APPURL?>public/img/love.png" alt="" style="width:70%;">
                         <?php endif; ?>
                     </div>
                 </div>
@@ -107,9 +108,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="index.php?mod=page&act=home" class="primary-btn cart-btn">QUAY LẠI TRANG CHỦ</a>
+                        <a href="<?=APPURL?>" class="primary-btn cart-btn">QUAY LẠI TRANG CHỦ</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <?php include_once 'v_footer.php'; ?>s

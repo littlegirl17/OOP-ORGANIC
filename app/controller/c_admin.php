@@ -1,14 +1,47 @@
 <?php
     namespace App\controller;
     use App\model\m_admin;
+    use App\model\m_user;
 
     class c_admin extends c_base{
         private $htmlAdmin;
+        private $htmluserAdmin;
 
         function __construct(){
             $this->htmlAdmin = new m_admin;
+            $this->htmluserAdmin = new m_user;
         }
 
+        public function adminLogin(){
+            $this->titlepage = "Admin login";
+            $kq = null;
+
+            //$_SERVER['REQUEST_METHOD']trả về phương thức yêu cầu (ví dụ: 'GET', 'POST', 'HEAD', 'PUT', 'DELETE', v.v.).
+            //Khi bạn muốn kiểm tra xem biểu mẫu đã được gửi bằng phương thức HTTP POST hay chưa
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $kq = $this->htmluserAdmin->user_getLogin($_POST['Email'],$_POST['MatKhau']);
+                if($kq){
+                    if($kq['HoatDong'] == 0){
+                        $_SESSION['user'] = $kq;
+                        $_SESSION['email'] = $_POST['Email'];
+                        if($_SESSION['user']['Quyen'] >=1 ){
+                            header("location: ".APPURL."admin/dashboard");
+                        }elseif ($_SESSION['user']['Quyen'] ==0){
+                            header("location: ".APPURL);
+                        }
+                    }else{
+                        header("location: index.php?mod=user&act=trangloi");
+                        exit(); //Kết thúc script để ngăn chặn việc thực thi code tiếp theo
+                    }
+
+
+                }else{
+                    $_SESSION['loi'] = "Email hoặc Password đã sai!";
+                }
+            }
+            $this->renderView("admin/v_admin_login", $this->titlepage ,$this->data);
+
+        }
         public function dashboard(){
             $this->titlepage = "Admin dashboard";
 
@@ -281,6 +314,257 @@
                 $this->data['detaildonhangadmin'] = $detaildonhangadmin;
                 $this->renderView("admin/v_admin_donhang_detail", $this->titlepage ,$this->data);
             }
+
+        // ADMIN user
+            function user(){
+                $this->titlepage = "Admin user";
+                
+
+                // Trích xuất giá trị $page từ đường dẫn URL
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+                // Tìm kiếm sản phẩm
+                if(isset($_POST['search_product'])){
+                    $keyword = $_POST['keyword'];
+                } else {
+                    $keyword = "";
+                }
+
+                $SoTrang = ceil($this->htmlAdmin->user_adminPhanTrang()/6);
+                $userall = $this->htmlAdmin->get_useradmin($keyword,$page);
+
+                $this->data['userall'] = $userall;
+                $this->data['SoTrang'] = $SoTrang;
+                $this->data['page'] = $page;
+                $this->renderView("admin/v_admin_user", $this->titlepage ,$this->data);
+
+            }
+
+            function userAdd(){
+                $this->titlepage = "Admin user add ";
+                
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $Email = isset($_POST['Email']) ? $_POST['Email'] : "";
+                    $SoDienThoai = isset($_POST['SoDienThoai']) ? intval($_POST['SoDienThoai']) : 0;
+                    $checkEAdmin = $this->htmlAdmin->user_checkEmailadmin($Email);
+                    $checkSDTAdmin = $this->htmlAdmin->user_checksdtadmin($SoDienThoai);
+
+                    if($checkEAdmin == TRUE || $checkSDTAdmin  == TRUE){
+                        
+                        if($checkEAdmin){
+                            $_SESSION['canhbaoEmail'] = "Email đã tồn tại, vui lòng nhập email khác";
+                        }
+                        if($checkSDTAdmin){
+                            $_SESSION['canhbaoSDT'] = "Số điện thoại đã tồn tại, vui lòng nhập Số điện thoại khác";
+                        }
+                    }else{
+                        $HoTen = isset($_POST['HoTen']) ? $_POST['HoTen'] : "";
+                        $UserName = isset($_POST['UserName']) ? $_POST['UserName'] : "";
+                        $Email = isset($_POST['Email']) ? $_POST['Email'] : "";
+                        $MatKhau = "123456"; 
+                        $DiaChi = isset($_POST['DiaChi']) ? $_POST['DiaChi'] : "";
+                        $GioiTinh = isset($_POST['GioiTinh']) ? intval($_POST['GioiTinh']) : 0;                    
+                        $SoDienThoai = isset($_POST['SoDienThoai']) ? $_POST['SoDienThoai'] : "";
+                        $Quyen = isset($_POST['Quyen']) ? intval($_POST['Quyen']) : 0;
+                        $HinhAnh = 'ava_user.jpeg';
+                        $this->htmlAdmin->add_user($HoTen, $UserName, $Email, $MatKhau, $DiaChi, $GioiTinh, $SoDienThoai, $Quyen,$HinhAnh);    
+                        
+                    }
+                }//header("location: ".APPURL."admin/user");
+                $this->renderView("admin/v_admin_add_user", $this->titlepage ,$this->data);
+            }
+
+            function userEdit(){
+                $this->titlepage = "Admin user edit ";
+                preg_match('/\/admin\/userEdit\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+                if (isset($matches[1])) {
+                    $MaTK = $matches[1];
+
+                    $getuserById = $this->htmlAdmin->get_userById($MaTK);
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $checkSDTAdmin = $this->htmlAdmin->user_checksdtadmin($_POST['SoDienThoai']);
+
+                        if(($checkSDTAdmin  && $checkSDTAdmin['MaTK'] != $MaTK) ){ 
+                            if($checkSDTAdmin){
+                                $_SESSION['canhbaoSDT'] = "Số điện thoại đã tồn tại, vui lòng nhập Số điện thoại khác";
+                            }
+                        }else{
+                            $HoTen = isset($_POST['HoTen']) ? $_POST['HoTen'] : "";
+                            $UserName = isset($_POST['UserName']) ? $_POST['UserName'] : "";
+                            $Email = isset($_POST['Email']) ? $_POST['Email'] : "";
+                            $MatKhau = isset($_POST['MatKhau']) ? ($_POST['MatKhau']) : "";
+                            $DiaChi = isset($_POST['DiaChi']) ? $_POST['DiaChi'] : "";
+                            $GioiTinh = isset($_POST['GioiTinh']) ? $_POST['GioiTinh'] : "";
+                            $SoDienThoai = isset($_POST['SoDienThoai']) ? $_POST['SoDienThoai'] : "";
+                            $Quyen = isset($_POST['Quyen']) ? intval($_POST['Quyen']) : 0;
+                            $HoatDong = isset($_POST['HoatDong']) ? intval($_POST['HoatDong']) : 0;                    
+                            $this->htmlAdmin->update_user($MaTK, $HoTen, $UserName, $Email, $MatKhau, $DiaChi, $GioiTinh, $SoDienThoai, $Quyen,$HoatDong);
+                            header("location: ".APPURL."admin/user");
+                        }
+                    }
+                }
+                $this->data['getuserById'] = $getuserById;
+                $this->renderView("admin/v_admin_edit_user", $this->titlepage ,$this->data);
+            }
+
+        //ADMIN COMMENT
+            function comment(){
+                $this->titlepage = "Admin comment";
+                if(isset($_SESSION['user']) == false){
+                    header("location: ".APPURL."user/login");
+                    $_SESSION['canhbao'] = "Vui lòng đăng nhập!";
+                    exit();//thoát liền trang web
+                }
+                
+                // Trích xuất giá trị $page từ đường dẫn URL
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+                $SoTrang = ceil($this->htmlAdmin->binhluan_adminPage()/6);
+                $cmtall = $this->htmlAdmin->get_cmtadmin($page);
+
+                
+                $this->data['SoTrang'] = $SoTrang;
+                $this->data['cmtall'] = $cmtall;
+                $this->data['page'] = $page;
+                $this->renderView("admin/v_admin_cmt", $this->titlepage ,$this->data);
+
+            }
+
+            function deletecomment(){
+                preg_match('/\/admin\/deletecomment\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+                if (isset($matches[1])) {
+                    $MaBL = $matches[1];
+                    if(isset($MaBL) && ($MaBL > 0)){
+                        $this->htmlAdmin->delete_cmt($MaBL);
+                    }
+                    header("location: ".APPURL."admin/comment");
+                }
+            }
+
+        // ADMIN BLOG
+            public function blog(){
+                $this->titlepage = "Admin blog";
+            
+                // Trích xuất giá trị $page từ đường dẫn URL
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                // Tìm kiếm sản phẩm
+                if(isset($_POST['search_product'])){
+                    $keyword = $_POST['keyword'];
+                } else {
+                    $keyword = "";
+                }
+            
+                $SoTrang = ceil($this->htmlAdmin->post_adminPhanTrang() / 3);
+                $danhmucall = $this->htmlAdmin->get_catagoryadmin($keyword,$page);
+                $baivietall = $this->htmlAdmin->get_postadmin($keyword,$page);
+            
+                // Gán giá trị cho các biến trong mảng $data
+                $this->data['danhmucall'] = $danhmucall;
+                $this->data['SoTrang'] = $SoTrang;
+                $this->data['baivietall'] = $baivietall;
+                $this->data['page'] = $page;
+            
+                $this->renderView("admin/v_admin_post", $this->titlepage, $this->data);
+            }
+
+            public function blogAdd(){
+                $this->titlepage = "Admin add blog";
+
+                if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    // Kiểm tra sự tồn tại của các biến và xử lý dữ liệu nếu cần
+                    $TieuDe = isset($_POST['TieuDe']) ? ($_POST['TieuDe']) : "";
+                    $MoTa = isset($_POST['MoTa']) ? ($_POST['MoTa']) : "";
+                    $MoTaNgan = isset($_POST['MoTaNgan']) ? ($_POST['MoTaNgan']) : "";
+                    $NgayViet = isset($_POST['NgayViet']) ? date('Y-m-d H:i:s', strtotime($_POST['NgayViet'])) : null;
+    
+                    $this->htmlAdmin->add_post($TieuDe,$_FILES['HinhAnh']['name'], $_FILES['HinhAnhDetail']['name'], $MoTaNgan, $MoTa,$NgayViet);
+    
+                    // Kiểm tra và di chuyển tệp đính kèm
+                    if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
+                        $tmpFilePath = $_FILES['HinhAnh']['tmp_name'];
+                        $uploadPath = "public/img/baiviet/" . $_FILES['HinhAnh']['name'];
+                        move_uploaded_file($tmpFilePath, $uploadPath);
+                    }
+
+                    if (isset($_FILES['HinhAnhDetail']) && $_FILES['HinhAnhDetail']['error'] == 0) {
+                        $tmpFilePath = $_FILES['HinhAnhDetail']['tmp_name'];
+                        $uploadPath = "public/img/baiviet/" . $_FILES['HinhAnhDetail']['name'];
+                        move_uploaded_file($tmpFilePath, $uploadPath);
+                    }
+                    header("location: ".APPURL."admin/blog");
+
+                }
+                    
+                
+
+                $this->renderView("admin/v_admin_add_post", $this->titlepage ,$this->data);
+            }
+
+            public function blogEdit(){
+                $this->titlepage = "Admin edit blog";
+                preg_match('/\/admin\/blogEdit\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+                
+                if (isset($matches[1])) {
+                    $MaBV = $matches[1];
+                    $getpostId = $this->htmlAdmin->get_postId($MaBV);
+
+                    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                        $TieuDe = isset($_POST['TieuDe']) ? ($_POST['TieuDe']) : "";
+                        $MoTa = isset($_POST['MoTa']) ? ($_POST['MoTa']) : "";
+                        $MoTaNgan = isset($_POST['MoTaNgan']) ? ($_POST['MoTaNgan']) : "";
+                        //$NgayViet = isset($_POST['NgayViet']) ? intval($_POST['NgayViet']) : "";
+                        
+                        // kiểm tra xem tệp hình ảnh có tồn tại trong $_FILESmảng hay không
+                            if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
+                                $tmpFilePath = $_FILES['HinhAnh']['tmp_name'];
+                                $uploadPath = "public/img/traicay/" . $_FILES['HinhAnh']['name'];
+                                move_uploaded_file($tmpFilePath, $uploadPath);
+                                $imageName = $_FILES['HinhAnh']['name'];
+                            }else{
+                                //Nếu không,lấy tên hình ảnh hiện có từ cơ sở dữ liệu cho sản phẩm đang được chỉnh sửa.
+                                $imageName = $getpostId['HinhAnh'];
+                            }
+
+                            if (isset($_FILES['HinhAnhDetail']) && $_FILES['HinhAnhDetail']['error'] == 0) {
+                                $tmpFilePath = $_FILES['HinhAnhDetail']['tmp_name'];
+                                $uploadPath = "public/img/baiviet/" . $_FILES['HinhAnhDetail']['name'];
+                                move_uploaded_file($tmpFilePath, $uploadPath);
+                                $imageNameDetail = $_FILES['HinhAnhDetail']['name'];
+                            }else{
+                                $imageNameDetail = $getpostId['HinhAnhDetail'];
+                            }
+                        $this->htmlAdmin->update_post($MaBV, $TieuDe, $imageName, $imageNameDetail, $MoTaNgan, $MoTa); 
+                        header("location: ".APPURL."admin/blog");
+                    }
+                    $this->data['getpostId'] = $getpostId;
+                }
+                
+                $this->renderView("admin/v_admin_edit_post", $this->titlepage ,$this->data);
+            }
+
+            function blogDelete(){
+                preg_match('/\/admin\/blogDelete\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+                if (isset($matches[1])) {
+                    $MaBV = $matches[1];
+                    if(isset($MaBV) && ($MaBV > 0)){
+                        $this->htmlAdmin->delete_cmt($MaBV);
+                    }
+                    header("location: ".APPURL."admin/blog");
+                }
+            }
+
+        // ADMIN LOVE
+        public function love(){
+            $this->titlepage = "Admin love";
+        
+            $admingetyeuthich = $this->htmlAdmin->admin_yeuthich();
+        
+            // Gán giá trị cho các biến trong mảng $data
+            $this->data['admingetyeuthich'] = $admingetyeuthich;
+        
+            $this->renderView("admin/v_admin_love", $this->titlepage, $this->data);
+        }  
+        
     }
 
 

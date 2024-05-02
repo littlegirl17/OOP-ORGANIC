@@ -60,7 +60,7 @@
                         <a href="<?=APPURL?>admin/product"><i class="fa-brands fa-product-hunt ico-side" style="color: #ffffff;"></i>Quản lí sản phẩm</a>
                     </li>
                     <li>
-                        <a href="<?=APPURL?>admin/post"><i class="fa-solid fa-blog ico-side" style="color: #f7f7f7;"></i>Quản lí bài viết</a>
+                        <a href="<?=APPURL?>admin/blog"><i class="fa-solid fa-blog ico-side" style="color: #f7f7f7;"></i>Quản lí bài viết</a>
                     </li>
                     <li>
                         <a href="<?=APPURL?>admin/user"><i class="fa-solid fa-users ico-side" style="color: #ffffff;"></i>Quản lí thành viên</a>
@@ -78,7 +78,7 @@
                         <a href="index.php?mod=admin&act=phanhoi"><i class="fa-solid fa-comments ico-side" style="color: #ffffff;"></i>Phản hồi khách hàng</a>
                     </li> -->
                     <li>
-                        <a href="index.php?mod=admin&act=logoutadmin"><i class="fa-solid fa-right-from-bracket ico-side" style="color: #ffffff;"></i>Thoát</a>
+                        <a href="<?=APPURL?>user/logout"><i class="fa-solid fa-right-from-bracket ico-side" style="color: #ffffff;"></i>Thoát</a>
                     </li>
                     
                 </ul>

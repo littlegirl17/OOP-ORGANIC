@@ -17,8 +17,9 @@
         //Phương thức này thực hiện một số công việc liên quan đến trang chủ
 
         function index(){
-            $keyword=$_GET['keyword'] ?? "";
             $this->titlepage = "Trang chủ Organic";
+            $keyword=$_GET['keyword'] ?? "";
+            
             // Show banner ở trang home
             $bannerHeader = $this->homeProductModel->load_banner_home();
             $getdanhmucHeader = $this->homeCategoryModel->danhmuc_getAll();
@@ -28,6 +29,7 @@
             $getLuotXem = $this->homeProductModel->page_productLuotXem();
             $danhmuchomeUuTien = $this->homeProductModel->danhmuc_getUuTien();
             $getbaiviet = $this->homeProductModel->page_blog();
+            
             //dữ liệu về các sản phẩm mới và các sản phẩm đang giảm giá sẽ được lưu trữ trong mảng $data để sau đó được truyền tới view
             $this->data['banner_header'] = $bannerHeader;// Show banner ở trang home
             
@@ -41,6 +43,26 @@
             //gọi phương thức renderView của c_base để hiển thị trang chủ với dữ liệu đã được chuẩn bị.
             $this->renderView("v_page_home", $this->titlepage ,$this->data);
         }
-    }
+
+        function blogDetail(){
+            $this->titlepage = "Trang chi tiết bài viết";
+            preg_match('/\/home\/blog\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);//kết quả được lưu trữ trong $matchesmảng
+            if (isset($matches[1])) {
+                $MaBV = $matches[1];
+                $getbaiviet = $this->homeProductModel->page_blog();
+                $detailblogid =  $this->homeProductModel->page_blogId($MaBV);
+                $relateblog = $this->homeProductModel->page_blogRelate($detailblogid['MaBV']);
+
+                $this->data['getbaiviet'] = $getbaiviet;
+                $this->data['detail_blog_byID'] = $detailblogid;
+                $this->data['relateblog'] = $relateblog;
+            }
+            //gọi phương thức renderView của c_base để hiển thị trang chủ với dữ liệu đã được chuẩn bị.
+            $this->renderView("v_page_blog", $this->titlepage ,$this->data);
+        }
+
+    } 
+
+        
 
 ?>

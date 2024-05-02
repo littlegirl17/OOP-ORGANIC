@@ -9,7 +9,7 @@
                             <div class="hero__categories">
                                 <div class="hero__categories__all">
                                     <i class="fa fa-bars"></i>
-                                    <span>All danh mục</span>
+                                    <span>Danh mục Organic</span>
                                 </div>
                                 <ul>
                                 <?php $getdanhmucHeader = $data['getall_danhmuc_header']; foreach($getdanhmucHeader as $dm):?>
@@ -18,26 +18,20 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-9">
-                            <div class="hero__search">
-                                <div class="hero__search__form">
-                                    <form action="#">
-                                        <div class="hero__search__categories">
-                                            All danh mục
-                                            <span class="arrow_carrot-down"></span>
-                                        </div>
-                                        <input type="text" placeholder="Tìm kiếm sản phẩm tại đây?">
-                                        <button type="submit" class="site-btn">SEARCH</button>
+                        <div class="hero__search">
+                            <div class="hero__search__form">
+                                <form action="" method="GET" >
+                                        <input type="text" name="keyword" id="live_search" placeholder="Tìm kiếm sản phẩm tại đây?" value="<?php echo $_GET['keyword'] ?? '' ?>">
+                                        <button type="submit" class="site-btn" id="searchBtn">Tìm kiếm</button>
                                     </form>
+                            </div>
+                            <div class="hero__search__phone">
+                                <div class="hero__search__phone__icon">
+                                    <i class="fa fa-phone"></i>
                                 </div>
-                                <div class="hero__search__phone">
-                                    <div class="hero__search__phone__icon">
-                                        <i class="fa fa-phone"></i>
-                                    </div>
-                                    <div class="hero__search__phone__text">
-                                            <h5>+035 312 3771</h5>
-                                            <span>Hỗ trợ khách hàng</span>
-                                    </div>
+                                <div class="hero__search__phone__text">
+                                    <h5>+035 312 3771</h5>
+                                    <span>Hỗ trợ khách hàng</span>
                                 </div>
                             </div>
                         </div>

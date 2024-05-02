@@ -29,9 +29,7 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+   
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
@@ -40,7 +38,7 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> </a></li>
+                <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> <span><?= isset($_SESSION['mygiohang']) ? COUNT($_SESSION['mygiohang']) : 0?></span> </a></li>
             </ul>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
@@ -129,8 +127,8 @@
                         
                             <div class="header__cart">
                                 <ul>
-                                    <li><a href="index.php?mod=product&act=yeuthich"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> </a></li>
+                                    <li><a href="<?=APPURL?>product/love"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="<?=APPURL?>product/cart"><i class="fa fa-shopping-bag"></i> <span><?= isset($_SESSION['mygiohang']) ? COUNT($_SESSION['mygiohang']) : 0?></span></a></li>
                                 </ul>
                             </div>
                             <div class="header__cart__login">

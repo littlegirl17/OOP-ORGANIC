@@ -1,10 +1,11 @@
+<?php include_once 'v_admin_header.php'; $getuserById = $data['getuserById']; ?>
 <form class="editUser" action="" method="post"> 
     <div class="main-content">
         <h3 class="title-page">
             Chỉnh sửa thông tin thành viên
         </h3>
         <div class="d-flex justify-content-end">
-        <input type="submit" class="btn btn-primary mb-2" name="submit" value="Lưu">
+        <input type="submit" class="btn btn-primary mb-2" value="Lưu">
         </div>
 
         <?php if(isset($_SESSION['canhbaoSDT'])): ?>
@@ -72,3 +73,4 @@
     </div>
 </form>
 
+<?php include_once 'v_admin_footer.php' ?>

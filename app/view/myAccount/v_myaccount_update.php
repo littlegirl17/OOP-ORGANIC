@@ -1,15 +1,16 @@
 <?php
+    include_once 'v_myaccount_header.php';
     if(isset($_SESSION['user']) && is_array($_SESSION['user']));
 ?>
 <div class="title_myacount">
     <h4>Cập nhật thông tin tài khoản</h4>
 </div>
-<form action="" method="post" enctype="multipart/form-data">
-    <div class="">    
+<form action="" method="post" enctype="multipart/form-data" >
+    <div class="" style="margin-bottom: 40px;">    
         <input type="hidden" name="MaTK" value="<?=$_SESSION['user']['MaTK']?>">   
 
         <div class="form-group myaccount_image update__user_myac">
-            <img src="view/img/avatar/<?=$_SESSION['user']['HinhAnh']?>" alt="">
+            <img src="<?=APPURL?>public/img/avatar/<?=$_SESSION['user']['HinhAnh']?>" alt="">
             <input type="file" class="form-control" name="HinhAnh" value="" >
         </div>
         <div class="form-group">
@@ -47,3 +48,7 @@
         <input type="submit" class="btn btn-success" name="submit" value="Lưu thông tin" >
     </div>
 </form>
+
+<?php
+    include_once 'v_myaccount_footer.php';
+?>

@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
-                <a href="<?=APPURL?>admin/catagoryAdd" class="btn btn-primary mb-2">Thêm danh mục mới</a>
+                <a href="<?=APPURL?>admin/catagoryAdd" class="btn btn-primary mb-2 ">Thêm danh mục mới</a>
             </div>
         </div>
     </div>

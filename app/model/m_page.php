@@ -79,13 +79,12 @@
                         if(empty($StatusProduct)){
                             echo $price;
                             echo ' 
-                                <form action="'.APPURL.'product/cart" method="post">
+                                <form  action="'.APPURL.'product/cart" method="POST" >
                                     <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                                     <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                                     <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
                                     <input type="hidden" name="TenSP" value="'.$item['TenSP'].'">
-                                    <input type="hidden" name="SoLuong" value="1">
-                                    <div class="intro">
+                                    <div class="intro ">
                                         <input type="submit" value="Thêm vào giỏ " >
                                     </div>
                                 </form> 
@@ -132,7 +131,7 @@
             
             $GiamGia = ceil((($item['GiaSP'] - $item['GiaGiam'])/$item['GiaSP'])*100);
             $GiamGia = '<div class="product__discount__percent_home">'.$GiamGia.'%</div>';
-            
+                
                 echo '
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="featured__item">
@@ -145,7 +144,7 @@
                         if(empty($StatusProduct)){
                             echo $price . $GiaGiamSP;
                             echo ' 
-                                <form action="'.APPURL.'product/cart" method="post">
+                                <form id="addtocart" action="'.APPURL.'product/cart" method="post">
                                     <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
                                     <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
                                     <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
@@ -224,6 +223,8 @@
     function showsp_home_luotxem($dssp){
         $page_home = "";
         foreach($dssp as $item){
+            $price = "";
+            $StatusProduct = "";
 
             if($item['GiaSP'] >=1){
                 $price = '<h5>'.number_format($item['GiaSP'],"0",",",".").' đ</h5>';
@@ -237,31 +238,46 @@
                 $SoView = '';
             }
 
+            if($item['StatusProduct'] >=1){
+                $StatusProduct = '<h5>Hết hàng</h5>';
+            }else{
+                $StatusProduct = "";
+            }
+            
             
             echo '
-                <div class="col-lg-3 col-md-4  fresh-meat">
+                <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="public/img/traicay/'.$item['HinhAnh'].'">
-                        
+                        <div class="featured__item__pic set-bg" data-setbg="'.APPURL.'public/img/traicay/'.$item['HinhAnh'].'">
                             
                         </div>
                         <div class="featured__item__text">
-                        <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
-                            '.$price.'
-                            <div class="featured__item__text_MX">'.$SoView.'</div>
+                            <h6><a href="'.APPURL.'product/detail/'.$item['MaSP'].'">'.$item['TenSP'].'</a></h6>
+            ';
+                        if(empty($StatusProduct)){
+                            echo $price;
+                            echo ' 
+                                <form  action="'.APPURL.'product/cart" method="POST" >
+                                    <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
+                                    <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
+                                    <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
+                                    <input type="hidden" name="TenSP" value="'.$item['TenSP'].'">
+                                    <div class="intro ">
+                                        <input type="submit" value="Thêm vào giỏ " >
+                                    </div>
+                                </form> 
+                            ';
+
+                        }else{
+                            echo $StatusProduct;
+                        }
+
+            echo '
+            <div class="featured__item__text_MX">'.$SoView.'</div>
                         </div>
-                        <form action="'.APPURL.'product/cart" method="post">
-                            <input type="hidden" name="MaSP" value="'.$item['MaSP'].'">
-                            <input type="hidden" name="HinhAnh" value="'.$item['HinhAnh'].'">
-                            <input type="hidden" name="GiaSP" value="'.$item['GiaSP'].'">
-                            <input type="hidden" name="TenSP" value="'.$item['TenSP'].'">
-                            <input type="hidden" name="SoLuong" value="1">
-                            <div class="intro">
-                                <input type="submit" value="Thêm vào giỏ " >
-                            </div>
-                        </form> 
                     </div>
-                </div>'
+                </div>
+            ';
                 ;
             
         }
@@ -272,11 +288,11 @@
     
 
     function page_blogId($MaBV){
-        return pdo_query_one("SELECT * FROM baiviet WHERE MaBV = ?",$MaBV);
+        return $this->data->pdo_query_one("SELECT * FROM baiviet WHERE MaBV = ?",$MaBV);
     }
 
-    function page_blogRelate($MaDM){
-        return pdo_query("SELECT * FROM baiviet WHERE MaDM = ? ORDER BY rand() ",$MaDM);
+    function page_blogRelate($MaBV){
+        return $this->data->pdo_query("SELECT * FROM baiviet WHERE MaBV = ? ORDER BY rand() ",$MaBV);
     }
 
     function show_home_blog($dsbv){
@@ -293,7 +309,7 @@
                             <li><i class="fa fa-calendar-o"></i> '.$item['NgayViet'].'</li>
                             <li><i class="fa fa-comment-o"></i> 5</li>
                         </ul>
-                        <h5><a href="index.php?mod=page&act=blog&MaBV='.$item['MaBV'].'">'.$item['TieuDe'].'</a></h5>
+                        <h5><a href="'.APPURL.'home/blog/'.$item['MaBV'].'">'.$item['TieuDe'].'</a></h5>
                         <p>'.$item['MoTaNgan'].'</p>
                     </div>
                 </div>

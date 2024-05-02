@@ -1,3 +1,4 @@
+<?php include_once 'v_admin_header.php' ?>
 <form class="addPro" action="" method="post" enctype="multipart/form-data">
     <div class="main-content">
         <h3 class="title-page">
@@ -46,12 +47,7 @@
                         <input type="datetime-local" class="form-control" name="NgayViet" id="NgayViet" placeholder="Chọn ngày viết">
                     </div> 
 
-                    <select name="MaDM" id="MaDM" class="admin__select">
-                        <option value="0">Chọn danh mục của bài viết</option>
-                        <?php foreach ($danhmucall as $dm): ?>
-                            <option value="<?= $dm['MaDM'] ?>"><?= $dm['TenDM'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                  
                     
                 </div>
             </div>
@@ -105,11 +101,7 @@
             return false;
         }
 
-        var MaDM = document.getElementById("MaDM");
-        if(MaDM.value==0){
-            alert("Vui lòng chọn danh mục của bài viết trước khi lưu!");
-            MaDM.focus();
-            return false;
-        }
     }
 </script>
+
+<?php include_once 'v_admin_footer.php' ?>

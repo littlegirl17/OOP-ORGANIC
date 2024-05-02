@@ -36,7 +36,7 @@ class route {
                 }
             }
         }
-        echo '404 Not Found';
+        echo '404 Not';
     }
 }
 

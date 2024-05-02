@@ -6,7 +6,7 @@
                 </h3>
                 <section class="statistics row">
                     <div class="col-sm-12 col-md-6 col-xl-2 ">
-                        <a href="index.php?mod=admin&act=admin_product" >
+                        <a href="<?=APPURL?>admin/product" >
                             <div class="card mb-3 widget-chart " style="border: none;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold " >
                                     <h5>
@@ -18,7 +18,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=admin_user">
+                        <a href="<?=APPURL?>admin/user">
                             <div class="card mb-3 widget-chart " style="border: none; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
 
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
@@ -31,7 +31,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=admin_post">
+                        <a href="<?=APPURL?>admin/post">
                             <div class="card mb-3 widget-chart " style="border: none; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
                                     <h5>
@@ -43,7 +43,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=admin_catagory">
+                        <a href="<?=APPURL?>admin/catagory">
                             <div class="card mb-3 widget-chart " style="border: none; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
                                     <h5>
@@ -55,7 +55,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=admin_donhang">
+                        <a href="<?=APPURL?>admin/order">
                             <div class="card mb-3 widget-chart " style="border: none; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
                                     <h5>
@@ -67,7 +67,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=admin_cmt">
+                        <a href="<?=APPURL?>admin/comment">
                             <div class="card mb-3 widget-chart " style="border: none;background-color:# ;color: #; box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
                                     <h5>
@@ -86,12 +86,12 @@
                                         Tổng phản hồi
                                     </h5>
                                 </div>
-                                <span class="widget-numbers"><?=$countfeedback = $data['countfeedback']?></span>
+                                <span class="widget-numbers"></span>
                             </div>
                         </a>
                     </div> -->
                     <div class="col-sm-12 col-md-6 col-xl-2">
-                        <a href="index.php?mod=admin&act=adminlove">
+                        <a href="<?=APPURL?>admin/love">
                             <div class="card mb-3 widget-chart " style="border: none;;box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                                 <div class="widget-subheading fsize-1 pt-2 opacity-10  font-weight-bold">
                                     <h5>

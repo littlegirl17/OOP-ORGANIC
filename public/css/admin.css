@@ -69,10 +69,10 @@ body:not(.darkmode) .fa-sun{ /*ẩn biểu tượng mặt trời khi không ở 
 }
 .sidebar ul li:hover a{
     background-color: #fff;
-    color: #7fad39;
+    color: #0AB68B;
 }
 .bg-green{
-    background-color: #7fad39;
+    background-color: #0AB68B;
 }
 nav ul {
     padding: 0 !important;
@@ -80,7 +80,7 @@ nav ul {
 }
 .box_infor{
     display: flex;
-    background-color: #B0E048;
+    background-color: #92DE8B;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .box_infor__img{
@@ -111,7 +111,7 @@ nav ul li a{
 }
 
 nav ul li:hover {
-    color: #7fad39;
+    color: #0AB68B;
     
 }
 
@@ -136,6 +136,22 @@ nav ul li:hover {
 .main-content .statistics a{
     text-decoration: none;
 } 
+
+.adminlogin{
+    margin: 0 auto;
+    width: 700px;
+    padding-top: 140px;
+
+}
+
+@keyframes chay {
+    from { margin-left: 50%; }
+    to { margin-left: 0%; }
+}
+
+.chay {
+    animation: chay 5s infinite; /* 5s là thời gian di chuyển, infinite để lặp lại vô hạn */
+}
 
 .tableadmin{
     margin: left;
@@ -226,13 +242,13 @@ nav ul li:hover {
 	background-color: #fff;
 	border: 1px solid #caced1;
 	border-radius: 0.25rem;
-	color: #7fad39;
+	color: #0AB68B;
 	cursor: pointer;
 }
 
 .label_admin{
     display: inline-block;
-    background-color: #7fad39;
+    background-color: #0AB68B;
     color: white;
     padding: 0.5rem;
     font-family: sans-serif;

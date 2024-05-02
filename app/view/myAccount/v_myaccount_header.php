@@ -85,7 +85,7 @@
                                         Xin chào, <?= isset($_SESSION['user']['UserName']) ? $_SESSION['user']['UserName'] : 'User' ?>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="index.php?mod=user&act=logout">Đăng xuất</a></li>
+                                            <li><a class="dropdown-item" href="<?=APPURL?>user/logout">Đăng xuất</a></li>
                                         </ul>
                                     </div>
                                 
@@ -109,13 +109,13 @@
                 <nav class="sidebar__myaccount">
                     <ul>
                         <li>
-                            <a href="index.php?mod=myaccount&act=myaccount"><i class="fa-solid fa-house ico-side"></i>Tài khoản</a>
+                            <a href="<?=APPURL?>user/myaccount"><i class="fa-solid fa-house ico-side"></i>Tài khoản</a>
                         </li>
                         <li>
-                            <a href="index.php?mod=myaccount&act=update_myaccount"><i class="fa-solid fa-pen-to-square ico-side" style="color: #ffffff;"></i>Cập nhật tài khoản</a>
+                            <a href="<?=APPURL?>user/myaccountUpdate"><i class="fa-solid fa-pen-to-square ico-side" style="color: #ffffff;"></i>Cập nhật tài khoản</a>
                         </li>
                         <li>
-                            <a href="index.php?mod=myaccount&act=doi_password"><i class="fa-solid fa-key ico-side" style="color: #ffffff;"></i> Đổi mật khẩu</a>
+                            <a href="<?=APPURL?>user/myaccountPassword"><i class="fa-solid fa-key ico-side" style="color: #ffffff;"></i> Đổi mật khẩu</a>
                         </li>
                         <li>
                             <a href="<?=APPURL?>user/myaccountOrder"><i class="fa-solid fa-cart-shopping ico-side" style="color: #f5f5f5;"></i>Đơn hàng của tôi</a>
@@ -127,7 +127,7 @@
                             <a href="<?=APPURL?>user/orderSuccess"><i class="fa-solid fa-check ico-sides" style="color: #ffffff;"></i>   Hoàn thành</a>
                         </li>
                         <li>
-                            <a href="index.php"><i class="fa-solid fa-right-from-bracket ico-side"></i>  Thoát</a>
+                            <a href="<?=APPURL?>"><i class="fa-solid fa-right-from-bracket ico-side"></i>  Thoát</a>
                         </li>
                     </ul>
                 </nav>

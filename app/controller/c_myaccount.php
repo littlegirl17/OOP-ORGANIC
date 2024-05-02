@@ -15,6 +15,60 @@
 
             $this->renderView("myAccount/v_myaccount_user", $this->titlepage, $this->data);
         }
+
+        function myaccountPassword(){
+            $this->titlepage = "Trang đổi mật khẩu";
+
+            
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $MaTK = $_POST['MaTK'];
+                $SoDienThoai = $_POST['SoDienThoai'];
+                $MatKhau = $_POST['MatKhau'];
+                $MatKhauNew = $_POST['MatKhauNew'];
+                $AgainMatKhau = $_POST['AgainMatKhau'];
+                $checkpass = $this->htmlMyaccount->checkpass_myaccount($SoDienThoai,$MatKhau);
+
+                if($checkpass){
+                    if($MatKhauNew == $AgainMatKhau){
+                        $this->htmlMyaccount->update_passw_myac($MaTK,$SoDienThoai,$MatKhauNew);
+                        $_SESSION['thongbao'] = "Mật khẩu mới đã thay đổi thành công";
+                    }else{
+                        $_SESSION['loi'] = "Mật khẩu mới và xác nhận mật khẩu không khớp";
+                    }
+                }else{
+                    $_SESSION['loi'] = "Số điện thoại hoặc mật khẩu bạn nhập chưa đúng";
+                }
+            }
+
+            $this->renderView("myAccount/v_myaccount_doipass", $this->titlepage, $this->data);
+        }
+
+        function myaccountUpdate(){
+            $this->titlepage = "Trang tài khoản";
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                
+                $this->htmlMyaccount->update_myaccountid($_POST['MaTK'], $_FILES['HinhAnh']['name'],$_POST['HoTen'],$_POST['UserName'],$_POST['Email'],$_POST['MatKhau'],$_POST['DiaChi'],$_POST['GioiTinh'],$_POST['SoDienThoai']);
+                if (isset($_FILES['HinhAnh']) && $_FILES['HinhAnh']['error'] == 0) {
+                    $tmpFilePath = $_FILES['HinhAnh']['tmp_name'];//Dòng này lấy đường dẫn tạm thời của tệp tải lên
+                    $uploadPath = "public/img/avatar/" . $_FILES['HinhAnh']['name'];//Dòng này xác định đường dẫn và tên tệp mục tiêu
+                    move_uploaded_file($tmpFilePath, $uploadPath);//Dòng này sử dụng hàm move_uploaded_file để di chuyển tệp từ vị trí tạm thời (được lưu trong $tmpfile) vào vị trí mục tiêu (được lưu trong $upload).
+                    
+                }      
+                
+
+                $_SESSION['user']['HinhAnh'] = $_FILES['HinhAnh']['name'];
+                $_SESSION['user']['HoTen'] = $_POST['HoTen'];
+                $_SESSION['user']['UserName'] = $_POST['UserName'];
+                $_SESSION['user']['Email'] = $_POST['Email'];
+                $_SESSION['user']['MatKhau'] = $_POST['MatKhau'];
+                $_SESSION['user']['DiaChi'] = $_POST['DiaChi'];
+                $_SESSION['user']['GioiTinh'] = $_POST['GioiTinh'];
+                $_SESSION['user']['SoDienThoai'] = $_POST['SoDienThoai'];
+            }
+
+            $this->renderView("myAccount/v_myaccount_update", $this->titlepage, $this->data);
+        }
         
         // Đơn hàng
         function myaccountOrder(){

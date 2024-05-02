@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
-                <a href="index.php?mod=admin&act=admin_add_user" class="btn btn-primary mb-2">Thêm thành viên mới </a>
+                <a href="<?=APPURL?>admin/userAdd" class="btn btn-primary mb-2">Thêm thành viên mới </a>
             </div>
         </div>
     </div>
@@ -42,6 +42,7 @@
                     </thead>
                     <tbody>
                         <?php 
+                            $userall = $data['userall'];
                             $stt = 1; 
                             foreach($userall as $user):
                         ?>
@@ -89,7 +90,7 @@
                             <td><?=$user['NgayTao']?></td>
                         
                             <td>
-                                <a href="index.php?mod=admin&act=admin_edit_user&MaTK=<?=$user['MaTK']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
+                                <a href="<?=APPURL?>admin/userEdit/<?=$user['MaTK']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
                             </td>
                             <td>
                                 <?php
@@ -122,23 +123,25 @@
 </div> 
 
 <div class="admin__pagein">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_user&page=<?=$page-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
+    <ul class="pagination">
+        <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
+            <a class="page-link" href="<?=APPURL?>admin/user?page=<?=($data['page']-1)?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <?php 
+        $SoTrang = $data['SoTrang']; 
+        for($i=1; $i <= $SoTrang ; $i++): ?>
+            <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
+                <a class="page-link" href="<?=APPURL?>admin/user?page=<?=$i?>"><?=$i?></a>
             </li>
-            <?php for($i=1; $i < $SoTrang ; $i++): ?>
-                <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                    <a class="page-link" href="index.php?mod=admin&act=admin_user&page=<?=$i?>"><?=$i?></a>
-                </li>
-            <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_user&page=<?=$page+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
+        <?php endfor;  ?>
+        <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+        <a class="page-link" href="<?= APPURL?>admin/user?page=<?= ($data['page'] + 1) ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
     </div>
 <script>
     function delete_user(MaTK){

@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <div class="d-flex justify-content-end">
-            <a href="index.php?mod=admin&act=admin_add_post" class="btn btn-primary mb-2">Thêm bài viết mới</a>
+            <a href="<?=APPURL?>admin/blogAdd" class="btn btn-primary mb-2">Thêm bài viết mới</a>
             </div>
         </div>
     </div>
@@ -33,12 +33,12 @@
                             <th>Mô tả ngắn</th>
                             <th>Mô tả</th>
                             <th>Ngày viết</th>
-                            <th>Mã danh mục</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
+                            $baivietall = $data['baivietall'];
                             $stt = 1; 
                             foreach($baivietall as $post):
                         ?>
@@ -46,15 +46,14 @@
                             <td><?=$stt?></td>
                             <td><?=$post['MaBV']?></td>
                             <td><?=$post['TieuDe']?></td>
-                            <td><img src="view/img/baiviet/<?=$post['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
-                            <td><img src="view/img/baiviet/<?=$post['HinhAnhDetail']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
+                            <td><img src="<?=APPURL?>public/img/baiviet/<?=$post['HinhAnh']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
+                            <td><img src="<?=APPURL?>public/img/baiviet/<?=$post['HinhAnhDetail']?>" alt="" style="width:80px; height:80px; object-fit:cover;"></td>
                             <td><?=$post['MoTaNgan']?></td>
                             <td class="post_admin" data-content=""><?= $post['MoTa'] ?></td>
                             <td><?=$post['NgayViet']?></td>
-                            <td><?=$post['MaDM']?></td>
                             <td>
-                                <a href="index.php?mod=admin&act=admin_edit_post&MaBV=<?=$post['MaBV']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
-                                <a href="index.php?mod=admin&act=admin_delete_post&MaBV=<?=$post['MaBV']?>" class="btn btn-danger" onclick="delete_post(<?=$post['MaBV']?>),event"><i class="fa-solid fa-trash"></i> Xóa</a>
+                                <a href="<?=APPURL?>admin/blogEdit/<?=$post['MaBV']?>" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> Sửa</a>
+                                <a href="<?=APPURL?>admin/blogDelete/<?=$post['MaBV']?>" class="btn btn-danger" onclick="delete_post(<?=$post['MaBV']?>),event"><i class="fa-solid fa-trash"></i> Xóa</a>
                             </td>
                         </tr>
                         <?php 
@@ -69,18 +68,20 @@
 
     <div class="admin__pagein">
         <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_post&page=<?=$page-1?>" aria-label="Previous">
+            <li class="page-item <?= ($data['page'] <= 1) ? "disabled" : ""?>">
+                <a class="page-link" href="<?=APPURL?>admin/blog?page=<?=($data['page']-1)?>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-            <?php for($i=1; $i < $SoTrang ; $i++): ?>
+            <?php 
+            $SoTrang = $data['SoTrang']; 
+            for($i=1; $i <= $SoTrang ; $i++): ?>
                 <li class="page-item <?= ($page==$i) ? 'active' : '' ?>">
-                    <a class="page-link" href="index.php?mod=admin&act=admin_post&page=<?=$i?>"><?=$i?></a>
+                    <a class="page-link" href="<?=APPURL?>admin/blog?page=<?=$i?>"><?=$i?></a>
                 </li>
-            <?php endfor; ?>
-                <li class="page-item <?= ($page >= $SoTrang) ? "disabled" : ""?>">
-                <a class="page-link" href="index.php?mod=admin&act=admin_post&page=<?=$page+1?>" aria-label="Next">
+            <?php endfor;  ?>
+            <li class="page-item <?=  ($page >= $SoTrang) ? "disabled" : ""?>">
+            <a class="page-link" href="<?= APPURL?>admin/blog?page=<?= ($data['page'] + 1) ?>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -91,7 +92,7 @@
     function delete_post(MaBV){
         var kq = confirm("Bạn có chắc chắn muốn xóa bài viết này không");
         if(kq){
-            window.location = 'index.php?mod=admin&act=admin_delete_post&MaBV='+MaBV;
+            window.location = '<?=APPURL?>admin/blogDelete/'+MaBV;
         }
         event.preventDefault();//sử dụng nó để ngăn chặn hành động mặc định
     }

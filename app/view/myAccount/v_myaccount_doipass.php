@@ -1,4 +1,5 @@
 <?php
+    include_once 'v_myaccount_header.php';
     if(isset($_SESSION['user']) && is_array($_SESSION['user']));
 ?>
 <div class="title_myacount">
@@ -39,4 +40,4 @@
         <?php endif; unset($_SESSION['loi']); ?>
     </div>
 </form>  
-        
+    <?php include_once 'v_myaccount_footer.php'; ?>
